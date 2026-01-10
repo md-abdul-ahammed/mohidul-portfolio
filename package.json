@@ -1,0 +1,46 @@
+{
+  "name": "mohidul-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node server.js",
+    "next-start": "next start",
+    "serve": "npx serve@latest out",
+    "lint": "next lint",
+    "export": "next export",
+    "deploy": "npm run build && surge out"
+  },
+  "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
+    "@vimeo/player": "^2.30.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.14",
+    "gsap": "^3.13.0",
+    "libphonenumber-js": "^1.12.17",
+    "locomotive-scroll": "^4.1.4",
+    "lottie-react": "^2.4.1",
+    "lucide-react": "^0.540.0",
+    "next": "15.4.6",
+    "react": "19.1.0",
+    "react-calendly": "^4.4.0",
+    "react-countup": "^6.5.3",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "react-phone-number-input": "^3.4.12",
+    "react-simple-typewriter": "^5.0.1",
+    "react-use": "^17.6.0",
+    "swiper": "^12.0.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.6",
+    "tailwindcss": "^4"
+  }
+}

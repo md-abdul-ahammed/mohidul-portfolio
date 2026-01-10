@@ -1,0 +1,81 @@
+"use client";
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
+import { API_ENDPOINTS } from "@/config/api";
+
+export default function ProjectShowCase2() {
+  const [sliderImages, setSliderImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_ENDPOINTS.HERO);
+        const data = await response.json();
+        
+        if (data.success && data.sliders && data.sliders.row_2) {
+          // Extract image URLs from row_2
+          const images = data.sliders.row_2.map(item => item.image);
+          setSliderImages(images);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // If loading or no images, show empty state or loading
+  if (loading || sliderImages.length === 0) {
+    return (
+      <div className="md:mx-2">
+        <div
+          className="sm:px-6 p-0 sm:max-w-[1444px] mx-auto overflow-hidden
+                   sm:border-x border-x border-[#D3D8DF] border-b sm:border-[#D3D8DF] lg:border-b-0"
+        >
+          <div className="pt-[8px] md:pt-0">
+            <div className="relative h-[220px] overflow-hidden">
+              <div className="flex items-center justify-center h-full">
+                {loading ? 'Loading...' : 'No images available'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // duplicate the set so we can scroll seamlessly
+  const track = [...sliderImages, ...sliderImages];
+
+  return (
+    <div className="md:mx-2">
+      <div
+        className="sm:px-6 p-0 sm:max-w-[1444px] mx-auto overflow-hidden
+                   sm:border-x border-x border-[#D3D8DF] border-b sm:border-[#D3D8DF] lg:border-b-0"
+      >
+        <div className="pt-[8px] md:pt-0">
+          {/* reverse-direction magic track */}
+          <div className="relative h-[220px] overflow-hidden">
+            <div className="flex absolute animate-slide-right">
+              {track.map((src, i) => (
+                <div key={i} className="flex-shrink-0 w-[340px] px-2">
+                  <Image
+                    src={src}
+                    alt={`Project Showcase ${i + 1}`}
+                    width={340}
+                    height={220}
+                    className="w-full h-[220px] object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

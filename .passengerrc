@@ -1,0 +1,14 @@
+# Phusion Passenger configuration for cPanel Application Manager
+# This file tells Passenger how to start your Next.js application
+
+# Use Node.js
+# Application type: nodejs
+
+# Startup file
+# passenger_startup_file: server.js
+
+# Environment
+passenger_nodejs: /opt/nodejs/bin/node
+passenger_app_root: /home2/mohidulm/public_html
+passenger_app_type: node
+passenger_startup_file: server.js

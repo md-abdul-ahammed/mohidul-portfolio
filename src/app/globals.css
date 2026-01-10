@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+:root {
+  --font-neue-montreal: 'Neue Montreal', sans-serif;
+  --font-neue-machina: 'Neue Machina', monospace;
+}
+
+body {
+  font-family: var(--font-neue-montreal);
+  background-color: #FBFBFB;
+}
+
+.font-machina {
+  font-family: var(--font-neue-machina);
+}
+
+@keyframes slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* move by half because we doubled images */
+}
+
+.animate-slide {
+  animation: slide 60s linear infinite; /* adjust 30s for speed */
+}
+@keyframes slideRight {
+  0%   { transform: translateX(-50%); } /* start halfway left */
+  100% { transform: translateX(0%); }   /* move right to beginning */
+}
+
+.animate-slide-right {
+  animation: slideRight 60s linear infinite;
+}
+.PhoneInputInput:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* loading animation css for when the website load */
+#initial-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.loader-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateY(0);
+}
+
+.top-layer {
+  background: #40A84B; /* Your preferred green color */
+  transition: transform 0.6s ease-in-out;
+  z-index: 2;
+}
+
+.bottom-layer {
+  background: #2D7A35; /* A slightly darker green for contrast */
+  transition: transform 0.6s ease-in-out 0.1s; /* 0.1s delay */
+  z-index: 1;
+}
+
+.loader-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: white;
+  text-align: center;
+}
+
+/* Hide animation */
+#initial-loader.hide .top-layer {
+  transform: translateY(-100%);
+}
+
+#initial-loader.hide .bottom-layer {
+  transform: translateY(-100%);
+}
+
+
+
+
+
+
+
+
+@keyframes footer-bg-scroll {
+0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.footer-bg-animate {
+  animation: footer-bg-scroll 30s linear infinite;
+  display: flex;
+  gap: 1rem; /* gap preserved */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* components/AnimatedHeading.module.css */
+.animatedHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.animatedSvg {
+  width: 100%;
+  height: auto;
+  max-width: 934px;
+}
+
+.animatedSvg path {
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  transition: opacity 0.3s ease, stroke-dashoffset 0.8s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
