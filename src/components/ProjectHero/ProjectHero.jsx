@@ -21,11 +21,13 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
     image_url,
     sub_title,
     iframe,
+    video,
     tags = [],
     title,
   } = projectHeroData || {};
 
   console.log("iframe", iframe);
+  console.log("video", video);
 
   return (
     <div className="mx-2 mt-18">
@@ -103,19 +105,38 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
           custom={5}
         >
           {iframe && (
-            <div className="relative pb-[56.25%] h-0 overflow-hidden">
-              <iframe
-                src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1`}
-                width="100%"
-                height="450"
-                className="absolute top-0 left-0 w-full h-full"
-                frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+            <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
+              <div className="absolute inset-0 w-full h-full">
+                <iframe
+                  src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
+                  className="absolute top-1/2 left-1/2 w-[177.78%] h-[177.78%] -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    minWidth: '100%',
+                    minHeight: '100%'
+                  }}
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           )}
-          {!iframe && (
+          {!iframe && video && (
+            <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
+              <video
+                src={video}
+                width="100%"
+                height="450"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            </div>
+          )}
+          {!iframe && !video && (
             <Image
               src={image_url || "/images/project/projectHero.svg"}
               alt={title || "project image"}

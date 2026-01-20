@@ -145,8 +145,16 @@ const MyWorkProcess = () => {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
             An overview of how ideas are shaped through my design process into
-            practical outcomes. Each project highlights the thought, effort, and
-            purpose behind my work.
+            practical outcomes.
+          </motion.p>
+          <motion.p
+            className="text-base md:text-base lg:text-base xl:text-lg"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          >
+            Each project highlights the thought, effort, and purpose behind my work.
           </motion.p>
         </div>
 

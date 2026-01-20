@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import AnimatedButton from "../AnimatedButtons";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { API_ENDPOINTS } from "@/config/api";
 
 const SideBar = ({ caseStudyData }) => {
@@ -13,8 +14,16 @@ const SideBar = ({ caseStudyData }) => {
   const sidebarRef = useRef(null);
   const stickyRef = useRef(null);
   const originalPositionRef = useRef({ top: 0, left: 0 });
+  const pathname = usePathname();
 
   const [heroData, setHeroData] = useState(null);
+  const [currentUrl, setCurrentUrl] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     fetch(API_ENDPOINTS.HERO)
@@ -38,6 +47,59 @@ const SideBar = ({ caseStudyData }) => {
 
   // Get the first case study or use empty object as fallback
   const caseStudy = caseStudyData?.[0] || {};
+
+  // Helper function to check if service is empty
+  const hasService = caseStudy.service && String(caseStudy.service).trim() !== '' && String(caseStudy.service).trim() !== 'undefined';
+
+  // Share URL functions
+  const getShareUrl = (platform) => {
+    if (!currentUrl) return '#';
+    
+    // Clean URL - remove query parameters and hash for sharing
+    const cleanUrl = currentUrl.split('?')[0].split('#')[0];
+    const encodedUrl = encodeURIComponent(cleanUrl);
+    
+    // Professional share title
+    const projectTitle = caseStudy.client_name || 'This Project';
+    const shareTitle = `Check out "${projectTitle}" - A case study by Mohidul Islam`;
+    const encodedTitle = encodeURIComponent(shareTitle);
+    
+    // Short description for some platforms
+    const description = `Explore this ${caseStudy.category || 'design'} project`;
+    const encodedDescription = encodeURIComponent(description);
+    
+    switch (platform) {
+      case 'facebook':
+        // Facebook automatically fetches Open Graph meta tags, but we can provide URL with quote parameter
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+      case 'linkedin':
+        // LinkedIn share with title
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+      case 'x':
+        // Twitter/X with clean formatting
+        return `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`;
+      case 'whatsapp':
+        // WhatsApp with title on separate line
+        return `https://wa.me/?text=${encodedTitle}%0A%0A${encodedUrl}`;
+      default:
+        return '#';
+    }
+  };
+
+  // Copy to clipboard function
+  const handleCopyLink = async (e) => {
+    e.preventDefault();
+    if (!currentUrl) return;
+    try {
+      // Copy clean URL without query parameters
+      const cleanUrl = currentUrl.split('?')[0];
+      await navigator.clipboard.writeText(cleanUrl);
+      alert('Link copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      alert('Failed to copy link');
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,7 +152,7 @@ const SideBar = ({ caseStudyData }) => {
         </div>
         
         {/* Row 2: TIMELINE and LIVE VIEW */}
-        <div className="grid grid-cols-2 gap-4 mb-4 border-b border-[#D3D8DF] pb-4">
+        <div className={`grid grid-cols-2 gap-4 mb-4 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}>
           {/* 3 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">TIMELINE</p>
@@ -109,7 +171,7 @@ const SideBar = ({ caseStudyData }) => {
                   rel="noopener noreferrer"
                   className="underline flex items-center gap-1"
                 >
-                  Visit Website
+                  Project Link
                   <svg className="w-4 h-4" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
                   </svg>
@@ -122,19 +184,20 @@ const SideBar = ({ caseStudyData }) => {
         </div>
 
         {/* 5 */}
-        <div className="mb-4">
-          <p className="text-sm text-[#66656A] mt-4">SERVICE WE PROVIDE</p>
-          <h5 className="text-base font-medium mt-1">
-            {String(caseStudy.service)
-              .split(/,\s*/g) // split ANY comma + spaces
-              .map((item, index) => (
-                <span key={index} className="block">
-                  {item}
-                </span>
-              ))}
-          </h5>
-
-          {console.log("caseStudy", caseStudy.service)}
+        {hasService && (
+          <div className="mb-4">
+            <p className="text-sm text-[#66656A] mt-4">SERVICE WE PROVIDE</p>
+            <h5 className="text-base font-medium mt-1">
+              {String(caseStudy.service)
+                .split(/,\s*/g) // split ANY comma + spaces
+                .map((item, index) => (
+                  <span key={index} className="block">
+                    {item}
+                  </span>
+                ))}
+            </h5>
+          </div>
+        )}
 
           {/* Button */}
           <div className="mt-4 flex justify-center">
@@ -156,55 +219,38 @@ const SideBar = ({ caseStudyData }) => {
           </div>
 
           {/* Share title + icons */}
-          <div className="mt-4 text-center">
+          <div className="mt-4 mb-2 text-center">
             <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
-            <div className="flex justify-center mt-2">
-              <div className="p-[5px] border border-[#D3D8DF] flex items-center justify-center">
-                <Image
-                  src="/images/hero/instagram.svg"
-                  alt="instagram"
-                  width={22}
-                  height={22}
-                  className="w-[22px] h-[22px]"
-                  unoptimized
-                />
-              </div>
-
-              <div className="p-[5px] border-y border-[#D3D8DF] flex items-center justify-center">
-                <Image
-                  src="/images/hero/linkedin-02.svg"
-                  alt="linkedin"
-                  width={22}
-                  height={22}
-                  className="w-[22px] h-[22px]"
-                  unoptimized
-                />
-              </div>
-
-              <div className="p-[5px] border-y border-[#D3D8DF] flex items-center justify-center">
-                <Image
-                  src="/images/hero/dribbble.svg"
-                  alt="dribbble"
-                  width={22}
-                  height={22}
-                  className="w-[22px] h-[22px]"
-                  unoptimized
-                />
-              </div>
-
-              <div className="p-[5px] flex items-center justify-center border border-[#D3D8DF]">
-                <Image
-                  src="/images/hero/behance-01.svg"
-                  alt="behance"
-                  width={22}
-                  height={22}
-                  className="w-[22px] h-[22px]"
-                  unoptimized
-                />
-              </div>
+            <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2">
+              {[
+                { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
+                { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
+                { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
+                { platform: 'copy', href: '#', src: "/images/hero/copy.svg", alt: "copy" },
+              ].map((social) => 
+                social.platform === 'copy' ? (
+                  <button
+                    key={social.alt}
+                    onClick={handleCopyLink}
+                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 cursor-pointer bg-transparent"
+                  >
+                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
+                  </button>
+                ) : (
+                  <a
+                    key={social.alt}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0"
+                  >
+                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
+                  </a>
+                )
+              )}
             </div>
           </div>
-        </div>
       </div>
 
       {/* ---------------- DESKTOP LAYOUT ---------------- */}
@@ -246,9 +292,9 @@ const SideBar = ({ caseStudyData }) => {
                   <a
                     href={caseStudy.project_link || "#"}
                     target={caseStudy.project_link ? "_blank" : "_self"}
-                    className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 border-b border-[#D3D8DF]`}
+                    className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}
                   >
-                    {caseStudy.project_link ? "Visit Website" : "Not Available"}
+                    {caseStudy.project_link ? "Project Link" : "Not Available"}
                     {caseStudy.project_link && (
                       <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
@@ -259,20 +305,22 @@ const SideBar = ({ caseStudyData }) => {
               </div>
 
               {/* 5 */}
-              <div className="mt-4">
-                <p className="text-sm text-[#66656A] mt-4">
-                  SERVICES I PROVIDED
-                </p>
-                 <h5 className="text-base font-medium mt-1">
-                {String(caseStudy.service)
-                  .split(/,\s*/g) // split ANY comma + spaces
-                  .map((item, index) => (
-                    <span key={index} className="block">
-                      {item}
-                    </span>
-                  ))}
-              </h5>
-              </div>
+              {hasService && (
+                <div className="mt-4">
+                  <p className="text-sm text-[#66656A] mt-4">
+                    SERVICES I PROVIDED
+                  </p>
+                  <h5 className="text-base font-medium mt-1">
+                    {String(caseStudy.service)
+                      .split(/,\s*/g) // split ANY comma + spaces
+                      .map((item, index) => (
+                        <span key={index} className="block">
+                          {item}
+                        </span>
+                      ))}
+                  </h5>
+                </div>
+              )}
             </div>
 
             {/* Button + Social icons */}
@@ -300,49 +348,94 @@ const SideBar = ({ caseStudyData }) => {
               </div>
 
               {/* Share title + icons */}
-              <div className="mt-4 text-center">
+              <div className="mt-4 mb-2 text-center">
                 <h5 className="text-base text-[#1D1C1F]">
                   Share this Case Study:
                 </h5>
                 <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                   {[
                     {
-                      href: ensureFullUrl(heroData?.social?.instagram) || "https://www.instagram.com/thisismohidul/",
-                      src: "/images/hero/instagram.svg",
-                      alt: "instagram",
+                      platform: 'facebook',
+                      href: getShareUrl('facebook'),
+                      src: "/images/hero/facebook.svg",
+                      alt: "facebook",
                     },
                     {
-                      href: ensureFullUrl(heroData?.social?.linkedin) || "https://www.linkedin.com/in/thisismohidul/",
-                      src: "/images/hero/linkedin-02.svg",
+                      platform: 'linkedin',
+                      href: getShareUrl('linkedin'),
+                      src: "/images/hero/linkedin.svg",
                       alt: "linkedin",
                     },
                     {
-                      href: ensureFullUrl(heroData?.social?.facebook) || "https://dribbble.com/thisismohidul",
-                      src: "/images/hero/dribbble.svg",
-                      alt: "dribbble",
+                      platform: 'x',
+                      href: getShareUrl('x'),
+                      src: "/images/hero/x.svg",
+                      alt: "x",
                     },
                     {
-                      href: ensureFullUrl(heroData?.social?.twitter) || "https://www.behance.net/thisismohidul",
-                      src: "/images/hero/behance-01.svg",
-                      alt: "behance",
+                      platform: 'whatsapp',
+                      href: getShareUrl('whatsapp'),
+                      src: "/images/hero/whatsapp.svg",
+                      alt: "whatsapp",
+                    },
+                    {
+                      platform: 'copy',
+                      href: '#',
+                      src: "/images/hero/copy.svg",
+                      alt: "copy",
                     },
                   ].map((social) => (
-                    <a
-                      key={social.alt}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group hover:bg-[#F5F6F7]"
-                    >
-                      <Image
-                        src={social.src}
-                        alt={social.alt}
-                        width={22}
-                        height={22}
-                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90"
-                        unoptimized
-                      />
-                    </a>
+                    social.platform === 'copy' ? (
+                      <button
+                        key={social.alt}
+                        onClick={handleCopyLink}
+                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                      >
+                        <Image
+                          src={social.src}
+                          alt={social.alt}
+                          width={30}
+                          height={30}
+                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          style={{
+                            filter: 'none'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.filter = 'none';
+                          }}
+                          unoptimized
+                        />
+                      </button>
+                    ) : (
+                      <a
+                        key={social.alt}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                      >
+                        <Image
+                          src={social.src}
+                          alt={social.alt}
+                          width={30}
+                          height={30}
+                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          style={{
+                            filter: 'none'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.filter = 'none';
+                          }}
+                          unoptimized
+                        />
+                      </a>
+                    )
                   ))}
                 </div>
               </div>
@@ -391,9 +484,9 @@ const SideBar = ({ caseStudyData }) => {
                 <a
                   href={caseStudy.project_link || "#"}
                   target={caseStudy.project_link ? "_blank" : "_self"}
-                  className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 border-b border-[#D3D8DF]`}
+                  className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}
                 >
-                  {caseStudy.project_link ? "Visit Website" : "Not Available"}
+                  {caseStudy.project_link ? "Project Link" : "Not Available"}
                   {caseStudy.project_link && (
                     <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
@@ -404,20 +497,20 @@ const SideBar = ({ caseStudyData }) => {
             </div>
 
             {/* 5 */}
-            <div className="mt-4">
-              <p className="text-sm text-[#66656A] mt-4">SERVICES I PROVIDED</p>
-              {/* <h5 className="text-base font-medium mt-1">{caseStudy.service}</h5> */}
-              <h5 className="text-base font-medium mt-1">
-                {String(caseStudy.service)
-                  .split(/,\s*/g) // split ANY comma + spaces
-                  .map((item, index) => (
-                    <span key={index} className="block">
-                      {item}
-                    </span>
-                  ))}
-              </h5>
-
-            </div>
+            {hasService && (
+              <div className="mt-4">
+                <p className="text-sm text-[#66656A] mt-4">SERVICES I PROVIDED</p>
+                <h5 className="text-base font-medium mt-1">
+                  {String(caseStudy.service)
+                    .split(/,\s*/g) // split ANY comma + spaces
+                    .map((item, index) => (
+                      <span key={index} className="block">
+                        {item}
+                      </span>
+                    ))}
+                </h5>
+              </div>
+            )}
           </div>
 
           {/* Button + Social icons */}
@@ -442,50 +535,52 @@ const SideBar = ({ caseStudyData }) => {
             </div>
 
             {/* Share title + icons */}
-            <div className="mt-4 text-center">
+            <div className="mt-4 mb-2 text-center">
               <h5 className="text-base text-[#1D1C1F]">
                 Share this Case Study:
               </h5>
               <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                 {[
-                  {
-                    href: ensureFullUrl(heroData?.social?.instagram) || "https://www.instagram.com/thisismohidul/",
-                    src: "/images/hero/instagram.svg",
-                    alt: "instagram",
-                  },
-                  {
-                    href: ensureFullUrl(heroData?.social?.linkedin) || "https://www.linkedin.com/in/thisismohidul/",
-                    src: "/images/hero/linkedin-02.svg",
-                    alt: "linkedin",
-                  },
-                  {
-                    href: ensureFullUrl(heroData?.social?.facebook) || "https://dribbble.com/thisismohidul",
-                    src: "/images/hero/dribbble.svg",
-                    alt: "dribbble",
-                  },
-                  {
-                    href: ensureFullUrl(heroData?.social?.twitter) || "https://www.behance.net/thisismohidul",
-                    src: "/images/hero/behance-01.svg",
-                    alt: "behance",
-                  },
-                ].map((social) => (
-                  <a
-                    key={social.alt}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group hover:bg-[#F5F6F7]"
-                  >
-                    <Image
-                      src={social.src}
-                      alt={social.alt}
-                      width={22}
-                      height={22}
-                      className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90"
-                      unoptimized
-                    />
-                  </a>
-                ))}
+                  { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                  { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
+                  { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
+                  { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
+                  { platform: 'copy', href: '#', src: "/images/hero/copy.svg", alt: "copy" },
+                ].map((social) => 
+                  social.platform === 'copy' ? (
+                    <button
+                      key={social.alt}
+                      onClick={handleCopyLink}
+                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                    >
+                      <Image
+                        src={social.src}
+                        alt={social.alt}
+                        width={22}
+                        height={22}
+                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        unoptimized
+                      />
+                    </button>
+                  ) : (
+                    <a
+                      key={social.alt}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                    >
+                      <Image
+                        src={social.src}
+                        alt={social.alt}
+                        width={22}
+                        height={22}
+                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        unoptimized
+                      />
+                    </a>
+                  )
+                )}
               </div>
             </div>
           </div>

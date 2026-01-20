@@ -31,30 +31,58 @@ const WhatIDo = () => {
         const response = await fetch(API_ENDPOINTS.SERVICES);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch services");
+          throw new Error(`Failed to fetch services: ${response.status} ${response.statusText}`);
         }
 
-        const data = await response.json();
+        // Check if response has content
+        const text = await response.text();
+        console.log('Services API Raw Response:', text);
+
+        if (!text || text.trim() === '') {
+          throw new Error("Empty response from server");
+        }
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (parseError) {
+          console.error('JSON Parse Error:', parseError);
+          console.error('Response text:', text);
+          throw new Error("Invalid JSON response from server");
+        }
+
         console.log('Services API Response:', data);
 
-        if (data.success && data.services && Array.isArray(data.services)) {
-          const servicesWithBorders = data.services.map((service, index) => {
-            // Use the icon URL directly from API - it's already properly formatted
-            return {
-              id: service.id,
-              icon: service.icon,
-              title: service.title,
-              description: service.subtitle,
-              borderClass: borderClasses[index] || "border-b border-r",
-            };
-          });
-
-          setServices(servicesWithBorders);
+        // Handle successful response with empty services array
+        if (data.success !== undefined) {
+          if (data.success && data.services && Array.isArray(data.services)) {
+            if (data.services.length > 0) {
+              const servicesWithBorders = data.services.map((service, index) => {
+                return {
+                  id: service.id,
+                  icon: service.icon || '/assets/img/services/default_icon.png',
+                  title: service.title || 'Service',
+                  description: service.subtitle || service.description || '',
+                  borderClass: borderClasses[index] || "border-b border-r",
+                };
+              });
+              setServices(servicesWithBorders);
+            } else {
+              // Empty services array - not an error, just no data
+              setServices([]);
+              setError("No services found in database");
+            }
+          } else {
+            // API returned success:false or missing services array
+            throw new Error(data.message || "API returned unsuccessful response");
+          }
         } else {
-          throw new Error("API returned unsuccessful response");
+          throw new Error("Invalid API response format");
         }
       } catch (err) {
-        setError(err.message);
+        console.error('Error fetching services:', err);
+        setError(err.message || "Error loading services");
+        setServices([]); // Set empty array on error
       } finally {
         setLoading(false);
       }

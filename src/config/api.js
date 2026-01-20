@@ -1,10 +1,11 @@
 // API Configuration
 // Production: Vercel deployment → uses cPanel backend at api.mohidul.me
-// Local: uses localhost
+// Local: Set NEXT_PUBLIC_API_URL in .env.local for local development
+// Vercel: Set NEXT_PUBLIC_API_URL in Vercel Environment Variables
 
 const API_BASE_URL = 
   process.env.NEXT_PUBLIC_API_URL || 
-  'https://api.mohidul.me'; // Production URL (cPanel backend)
+  'https://api.mohidul.me'; // Default: Production URL (cPanel backend)
 
 export const API_ENDPOINTS = {
   // GET endpoints
