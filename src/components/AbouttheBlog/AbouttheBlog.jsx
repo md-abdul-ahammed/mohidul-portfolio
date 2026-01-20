@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
 import { neueMontreal } from "@/fonts/neueMontreal";
+import HoverVideo from "../HoverVideo";
 
 const AbouttheBlog = ({ blogContent = [], blogData }) => {
 
@@ -14,33 +15,80 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
     );
   }
 
-  // Render media function
+  // MEDIA RENDER FUNCTION for blogContent sections
   const renderMedia = (item) => {
+    // Check for iframe first (blog content uses iframe property)
     if (item.iframe) {
       return (
-        <div className="w-full h-[300px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
-          <iframe
-            src={`${item.iframe}?autoplay=0&muted=1`}
-            className="w-full h-full object-cover"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            title={item.title}
-          ></iframe>
-        </div>
+        <HoverVideo url={item.iframe} />
       );
     }
 
+    // Check for image property (blog content uses image property)
     if (item.image) {
       return (
-        <div className="w-full">
-          <Image
-            src={item.image}
-            alt={item.title || "Blog content"}
-            width={2000}
-            height={2000}
-            className="w-full h-auto object-cover rounded-lg"
-          />
+        <Image
+          src={item.image}
+          alt={item.title || "Blog media"}
+          width={2000}
+          height={1000}
+          className="w-full h-auto block"
+          style={{ 
+            width: '100%',
+            height: 'auto',
+            display: 'block'
+          }}
+          sizes="100vw"
+          priority
+        />
+      );
+    }
+
+    // Also support media_type and media_url format (for consistency)
+    if (item.media_type === "iframe" && item.media_url) {
+      return (
+        <HoverVideo url={item.media_url} />
+      );
+    }
+
+    if (item.media_type === "image" && item.media_url) {
+      return (
+        <Image
+          src={item.media_url}
+          alt={item.title || "Blog media"}
+          width={2000}
+          height={1000}
+          className="w-full h-auto block"
+          style={{ 
+            width: '100%',
+            height: 'auto',
+            display: 'block'
+          }}
+          sizes="100vw"
+          priority
+        />
+      );
+    }
+
+    if (item.images?.length > 0) {
+      return (
+        <div className="grid gap-4">
+          {item.images.map((img, idx) => (
+            <Image
+              key={idx}
+              src={img}
+              alt={`${item.title || "Blog"} image ${idx + 1}`}
+              width={2000}
+              height={1000}
+              className="w-full h-auto block"
+              style={{ 
+                width: '100%',
+                height: 'auto',
+                display: 'block'
+              }}
+              sizes="100vw"
+            />
+          ))}
         </div>
       );
     }
@@ -51,47 +99,27 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
   return (
     <div className="mx-2 container-section">
       <div className="mx-auto max-w-[1036px] [@media(min-width:1920px)]:max-w-[1051px]">
-        <div className="px-4 md:px-5 lg:px-6 xl:px-8 py-6 md:py-5 lg:py-6 xl:py-8 border-x border-[#D3D8DF] [@media(min-width:1920px)]:border-b">
+        <div className="py-6 md:py-5 lg:py-6 xl:py-8 border-x border-[#D3D8DF] [@media(min-width:1920px)]:border-b">
           {blogContent.map((item, index) => (
             <div
               key={item.id}
               className="mb-2 md:mb-2 pb-6"
             >
-              {/* Title and Subtitle */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <h1
-                  className={`${neueMontreal.className} text-[34px] md:text-5xl lg:text-[64px] text-[#1D1C1F] font-medium leading-[1.1] mb-4`}
+              <div className="px-4 md:px-5 lg:px-6 xl:px-8 mb-6">
+                <h2 className="text-[30px] md:text-3xl lg:text-4xl xl:text-5xl font-medium mb-4">
+                  {item.title || `Section ${index + 1}`}
+                </h2>
+
+                <pre
+                  className={`text-base md:text-base lg:text-base xl:text-lg text-[#66656A] whitespace-pre-wrap ${neueMontreal.className}`}
                 >
-                  {item.title}
-                </h1>
+                  {item.sub_title || item.subtitle || ''}
+                </pre>
+              </div>
 
-                {item.sub_title && (
-                  <p className="text-[#66656A] text-base md:text-lg mb-6 max-w-3xl">
-                    {item.sub_title}
-                  </p>
-                )}
-              </motion.div>
-
-              {/* Media (Image or Iframe) */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.1 + 0.2 }}
-                className="mb-8"
-              >
+              <div className="w-full">
                 {renderMedia(item)}
-              </motion.div>
-
-              {/* Divider between sections (except last one) */}
-              {index < blogContent.length - 1 && (
-                <hr className="border-t border-[#D3D8DF] my-8" />
-              )}
+              </div>
             </div>
           ))}
         </div>
@@ -101,9 +129,3 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
 };
 
 export default AbouttheBlog;
-
-
-
-
-
-
