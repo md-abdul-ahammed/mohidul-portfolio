@@ -3,7 +3,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
 import { neueMontreal } from "@/fonts/neueMontreal";
-import HoverVideo from "../HoverVideo";
 
 const AbouttheBlog = ({ blogContent = [], blogData }) => {
 
@@ -19,8 +18,23 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
   const renderMedia = (item) => {
     // Check for iframe first (blog content uses iframe property)
     if (item.iframe) {
+      // Full width Vimeo video like banner
       return (
-        <HoverVideo url={item.iframe} />
+        <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black -mx-4 md:-mx-5 lg:-mx-6 xl:-mx-8">
+          <div className="absolute inset-0 w-full h-full">
+            <iframe
+              src={`${item.iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
+              className="absolute top-1/2 left-1/2 w-[177.78%] h-[177.78%] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                minWidth: '100%',
+                minHeight: '100%'
+              }}
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
       );
     }
 
@@ -46,8 +60,23 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
 
     // Also support media_type and media_url format (for consistency)
     if (item.media_type === "iframe" && item.media_url) {
+      // Full width Vimeo video like banner
       return (
-        <HoverVideo url={item.media_url} />
+        <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black -mx-4 md:-mx-5 lg:-mx-6 xl:-mx-8">
+          <div className="absolute inset-0 w-full h-full">
+            <iframe
+              src={`${item.media_url}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
+              className="absolute top-1/2 left-1/2 w-[177.78%] h-[177.78%] -translate-x-1/2 -translate-y-1/2"
+              style={{
+                minWidth: '100%',
+                minHeight: '100%'
+              }}
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
       );
     }
 
