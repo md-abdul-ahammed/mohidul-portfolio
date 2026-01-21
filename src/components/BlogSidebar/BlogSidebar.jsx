@@ -19,6 +19,10 @@ const BlogSidebar = ({ blogInfo }) => {
   const [heroData, setHeroData] = useState(null);
   const [currentUrl, setCurrentUrl] = useState('');
 
+  // Use fallback empty object if blogInfo is not available (like Project SideBar)
+  // This ensures sidebar always renders even if blogInfo is missing
+  const blogData = blogInfo || {};
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentUrl(window.location.href);
@@ -54,12 +58,12 @@ const BlogSidebar = ({ blogInfo }) => {
     const encodedUrl = encodeURIComponent(cleanUrl);
     
     // Professional share title
-    const blogTitle = blogInfo?.author_name || 'This Blog';
+    const blogTitle = blogData?.author_name || 'This Blog';
     const shareTitle = `Check out "${blogTitle}" - A blog post by Mohidul Islam`;
     const encodedTitle = encodeURIComponent(shareTitle);
     
     // Short description for some platforms
-    const description = `Explore this ${blogInfo?.category || 'blog'} post`;
+    const description = `Explore this ${blogData?.category || 'blog'} post`;
     const encodedDescription = encodeURIComponent(description);
     
     switch (platform) {
@@ -122,12 +126,8 @@ const BlogSidebar = ({ blogInfo }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (!blogInfo) {
-    return null;
-  }
-
   // Helper function to check if source link exists
-  const hasSource = blogInfo.source_link && String(blogInfo.source_link).trim() !== '' && String(blogInfo.source_link).trim() !== 'undefined';
+  const hasSource = blogData.source_link && String(blogData.source_link).trim() !== '' && String(blogData.source_link).trim() !== 'undefined';
 
   return (
     <div className="mx-2 md:mx-0 md:w-[280px] lg:w-[320px] xl:w-[365px]">
@@ -140,14 +140,14 @@ const BlogSidebar = ({ blogInfo }) => {
           <div>
             <p className="text-sm text-[#66656A] mt-4">AUTHOR</p>
             <h5 className="text-base font-medium mt-1">
-              {blogInfo.author_name}
+              {blogData.author_name || 'N/A'}
             </h5>
           </div>
           {/* 2 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
             <h5 className="text-base font-medium mt-1">
-              {blogInfo.category}
+              {blogData.category || 'N/A'}
             </h5>
           </div>
         </div>
@@ -158,14 +158,14 @@ const BlogSidebar = ({ blogInfo }) => {
           <div>
             <p className="text-sm text-[#66656A] mt-4">READING TIME</p>
             <h5 className="text-base font-medium mt-1">
-              {blogInfo.reading_time}
+              {blogData.reading_time || 'N/A'}
             </h5>
           </div>
           {/* 4 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
             <h5 className="text-base font-medium mt-1">
-              {blogInfo.published_date}
+              {blogData.published_date || 'N/A'}
             </h5>
           </div>
         </div>
@@ -175,9 +175,9 @@ const BlogSidebar = ({ blogInfo }) => {
           <div className="mb-4">
             <p className="text-sm text-[#66656A] mt-4">SOURCE</p>
             <h5 className="text-base font-medium mt-1">
-              {blogInfo.source_link ? (
+              {blogData.source_link ? (
                 <a 
-                  href={ensureFullUrl(blogInfo.source_link)} 
+                  href={ensureFullUrl(blogData.source_link)} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="underline flex items-center gap-1"
@@ -264,28 +264,28 @@ const BlogSidebar = ({ blogInfo }) => {
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">AUTHOR</p>
                   <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {blogInfo.author_name}
+                    {blogData.author_name || 'N/A'}
                   </h5>
                 </div>
                 {/* 2 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
                   <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {blogInfo.category}
+                    {blogData.category || 'N/A'}
                   </h5>
                 </div>
                 {/* 3 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">READING TIME</p>
                   <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {blogInfo.reading_time}
+                    {blogData.reading_time || 'N/A'}
                   </h5>
                 </div>
                 {/* 4 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
                   <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {blogInfo.published_date}
+                    {blogData.published_date || 'N/A'}
                   </h5>
                 </div>
               </div>
@@ -297,9 +297,9 @@ const BlogSidebar = ({ blogInfo }) => {
                     SOURCE
                   </p>
                   <h5 className="text-base font-medium mt-1">
-                    {blogInfo.source_link ? (
+                    {blogData.source_link ? (
                       <a 
-                        href={ensureFullUrl(blogInfo.source_link)} 
+                        href={ensureFullUrl(blogData.source_link)} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="underline flex items-center gap-1"
@@ -455,28 +455,28 @@ const BlogSidebar = ({ blogInfo }) => {
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">AUTHOR</p>
                 <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {blogInfo.author_name}
+                  {blogData.author_name || 'N/A'}
                 </h5>
               </div>
               {/* 2 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
                 <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {blogInfo.category}
+                  {blogData.category || 'N/A'}
                 </h5>
               </div>
               {/* 3 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">READING TIME</p>
                 <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {blogInfo.reading_time}
+                  {blogData.reading_time || 'N/A'}
                 </h5>
               </div>
               {/* 4 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
                 <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {blogInfo.published_date}
+                  {blogData.published_date || 'N/A'}
                 </h5>
               </div>
             </div>
@@ -486,9 +486,9 @@ const BlogSidebar = ({ blogInfo }) => {
               <div className="mt-4">
                 <p className="text-sm text-[#66656A] mt-4">SOURCE</p>
                 <h5 className="text-base font-medium mt-1">
-                  {blogInfo.source_link ? (
+                  {blogData.source_link ? (
                     <a 
-                      href={ensureFullUrl(blogInfo.source_link)} 
+                      href={ensureFullUrl(blogData.source_link)} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="underline flex items-center gap-1"

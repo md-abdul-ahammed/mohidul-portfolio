@@ -113,7 +113,7 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
                 <pre
                   className={`text-base md:text-base lg:text-base xl:text-lg text-[#66656A] whitespace-pre-wrap ${neueMontreal.className}`}
                 >
-                  {item.sub_title || item.subtitle || ''}
+                  {item.subtitle || item.sub_title || ''}
                 </pre>
               </div>
 
