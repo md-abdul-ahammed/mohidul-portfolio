@@ -43,7 +43,7 @@ const HoverVideo = ({ url }) => {
       onMouseLeave={handleMouseLeave}
       style={{
         width: '100%',
-        aspectRatio: '16 / 9',
+        aspectRatio: '16 / 10',
         position: 'relative',
         maxWidth: '100%',
       }}

@@ -105,7 +105,7 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
           custom={5}
         >
           {iframe && (
-            <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 9' }}>
+            <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 10' }}>
               <iframe
                 src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 box-border"
