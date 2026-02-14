@@ -106,17 +106,21 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
         >
           {iframe && (
             <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 9' }}>
-              <div className="absolute inset-0">
-                <iframe
-                  src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
-                  className="absolute left-1/2 top-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 scale-[1.25]"
-                  style={{ border: 'none' }}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title="Vimeo video"
-                />
-              </div>
+              <iframe
+                src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 box-border"
+                style={{
+                  border: 'none',
+                  width: '177.78vh',
+                  height: '56.25vw',
+                  minWidth: '100%',
+                  minHeight: '100%',
+                }}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                title="Vimeo video"
+              />
             </div>
           )}
           {!iframe && video && (
