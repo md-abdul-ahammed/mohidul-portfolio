@@ -3,9 +3,9 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Insta from "../svg/commons/insta";
 import Linkdin from "../svg/commons/linkdin";
-import WhatsApp from "../svg/commons/WhatsApp";
 import Dribb from "../svg/commons/Dribb";
 import Brhance from "../svg/commons/Brhance";
+import WhatsApp from "../svg/commons/WhatsApp";
 import Link from "next/link";
 import AnimatedButton from "../AnimatedButtons";
 import { useRouter } from "next/navigation";
@@ -118,14 +118,14 @@ const Footer = () => {
       alt: "instagram",
     },
     {
-      href: "https://www.linkedin.com/in/thisismohidul/",
-      component: <Linkdin />,
-      alt: "linkedin",
-    },
-    {
       href: "https://wa.me/8801710055978",
       component: <WhatsApp />,
       alt: "whatsapp",
+    },
+    {
+      href: "https://www.linkedin.com/in/thisismohidul/",
+      component: <Linkdin />,
+      alt: "linkedin",
     },
     {
       href: "https://dribbble.com/thisismohidul",
@@ -147,14 +147,14 @@ const Footer = () => {
       alt: "instagram",
     },
     {
+      href: "https://wa.me/8801710055978",
+      component: <WhatsApp />,
+      alt: "whatsapp",
+    },
+    {
       href: socialLinks.linkedin,
       component: <Linkdin />,
       alt: "linkedin",
-    },
-    {
-      href: socialLinks.whatsapp || "https://wa.me/8801710055978",
-      component: <WhatsApp />,
-      alt: "whatsapp",
     },
     {
       href: socialLinks.facebook, // Note: API returns dribbble as facebook key

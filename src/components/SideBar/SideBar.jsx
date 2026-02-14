@@ -70,7 +70,7 @@ const SideBar = ({ caseStudyData }) => {
     
     switch (platform) {
       case 'instagram':
-        // Instagram doesn't have web share URL - link to profile
+        // Instagram: link to profile (no web share API)
         return ensureFullUrl(heroData?.social?.instagram) || 'https://www.instagram.com/thisismohidul/';
       case 'linkedin':
         // LinkedIn share with title

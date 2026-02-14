@@ -159,17 +159,17 @@ const Hero = () => {
                   alt: "instagram",
                 },
                 {
+                  href: "https://wa.me/8801710055978",
+                  src: "/images/hero/whatsapp.svg",
+                  alt: "whatsapp",
+                },
+                {
                   href: ensureFullUrl(heroData?.social?.linkedin) || "https://www.linkedin.com/in/thisismohidul/",
                   src: "/images/hero/linkedin.svg",
                   alt: "linkedin",
                 },
                 {
-                  href: ensureFullUrl(heroData?.social?.whatsapp) || "https://wa.me/8801710055978",
-                  src: "/images/hero/whatsapp.svg",
-                  alt: "whatsapp",
-                },
-                {
-                  href: ensureFullUrl(heroData?.social?.facebook) || "https://dribbble.com/thisismohidul",
+                  href: ensureFullUrl(heroData?.social?.facebook) ||  "https://dribbble.com/thisismohidul",
                   src: "/images/hero/dribbble.svg",
                   alt: "dribbble",
                 },

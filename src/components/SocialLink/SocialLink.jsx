@@ -18,7 +18,7 @@ const SocialLink = () => {
 
               <div className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center">
                 <Image
-                  src="/images/hero/linkedin-02.svg"
+                  src="/images/hero/linkedin.svg"
                   alt="linkedin"
                   width={22}
                   height={22}

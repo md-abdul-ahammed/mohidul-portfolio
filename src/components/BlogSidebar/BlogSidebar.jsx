@@ -68,7 +68,7 @@ const BlogSidebar = ({ blogInfo }) => {
     
     switch (platform) {
       case 'instagram':
-        // Instagram doesn't have web share URL - link to profile
+        // Instagram: link to profile (no web share API)
         return ensureFullUrl(heroData?.social?.instagram) || 'https://www.instagram.com/thisismohidul/';
       case 'linkedin':
         // LinkedIn share with title
@@ -557,9 +557,16 @@ const BlogSidebar = ({ blogInfo }) => {
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={22}
-                        height={22}
-                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        width={30}
+                        height={30}
+                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: 'none' }}
+                        onMouseEnter={(e) => {
+                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.filter = 'none';
+                        }}
                         unoptimized
                       />
                     </button>
@@ -574,9 +581,16 @@ const BlogSidebar = ({ blogInfo }) => {
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={22}
-                        height={22}
-                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        width={30}
+                        height={30}
+                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: 'none' }}
+                        onMouseEnter={(e) => {
+                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.filter = 'none';
+                        }}
                         unoptimized
                       />
                     </a>
