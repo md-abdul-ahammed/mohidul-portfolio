@@ -30,9 +30,9 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
   console.log("video", video);
 
   return (
-    <div className="mt-18">
-      {/* Breadcrumb + Title + Description – contained */}
-      <div className="mx-2 px-4 md:px-4 lg:px-6 py-10 border-x border-b border-[#D3D8DF] mx-auto md:max-w-[1444px]">
+    <div className="mx-2 mt-18">
+      <div className="px-4 md:px-4 lg:px-6 py-10 border-x border-b border-[#D3D8DF] mx-auto md:max-w-[1444px]">
+        {/* Breadcrumb */}
         <motion.div
           className="flex flex-wrap items-center gap-2 md:gap-3 lg:gap-5"
           variants={fadeInUp}
@@ -49,6 +49,7 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
           </h6>
         </motion.div>
 
+        {/* Title & Description */}
         <motion.div
           className="pt-6 pb-10 md:pt-8 lg:pt-10 md:items-end md:justify-between gap-6"
           variants={fadeInUp}
@@ -95,55 +96,55 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
             </motion.div>
           </div>
         </motion.div>
-      </div>
 
-      {/* Media – full viewport width, no side gaps (covers black/empty space) */}
-      <motion.div
-        className="w-full overflow-hidden border-b border-[#D3D8DF]"
-        variants={fadeInUp}
-        initial="hidden"
-        animate="visible"
-        custom={5}
-      >
-        {iframe && (
-          <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 9' }}>
-            <iframe
-              src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
-              className="absolute top-0 left-0 w-full h-full"
-              style={{ border: 'none' }}
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title="Vimeo video"
-            />
-          </div>
-        )}
-        {!iframe && video && (
-          <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 9' }}>
-            <video
-              src={video}
-              className="absolute top-0 left-0 w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              controls
-            />
-          </div>
-        )}
-        {!iframe && !video && (
-          <div className="relative w-full bg-[#F5F5F5]" style={{ aspectRatio: '16 / 9' }}>
+        {/* Image */}
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+          custom={5}
+        >
+          {iframe && (
+            <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '16 / 9' }}>
+              <div className="absolute inset-0">
+                <iframe
+                  src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
+                  className="absolute left-1/2 top-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 scale-[1.25]"
+                  style={{ border: 'none' }}
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Vimeo video"
+                />
+              </div>
+            </div>
+          )}
+          {!iframe && video && (
+            <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
+              <video
+                src={video}
+                width="100%"
+                height="450"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            </div>
+          )}
+          {!iframe && !video && (
             <Image
               src={image_url || "/images/project/projectHero.svg"}
               alt={title || "project image"}
-              width={1920}
-              height={1080}
-              className="w-full h-full object-cover object-center"
-              sizes="100vw"
+              width={687}
+              height={450}
+              className="w-full h-auto"
             />
-          </div>
-        )}
-      </motion.div>
+          )}
+        </motion.div>
+      </div>
     </div>
   );
 };

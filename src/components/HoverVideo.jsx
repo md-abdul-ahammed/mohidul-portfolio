@@ -48,22 +48,19 @@ const HoverVideo = ({ url }) => {
         maxWidth: '100%',
       }}
     >
-      <iframe
-        ref={iframeRef}
-        src={`${url}?background=1&responsive=1`}
-        className="absolute top-0 left-0 w-full h-full min-w-full min-h-full"
-        style={{
-          width: '100%',
-          height: '100%',
-          border: 'none',
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
-        allow="autoplay; fullscreen"
-        frameBorder="0"
-      />
+      <div className="absolute inset-0">
+        <iframe
+          ref={iframeRef}
+          src={`${url}?background=1&responsive=1`}
+          className="absolute left-1/2 top-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 scale-[1.25]"
+          style={{
+            border: 'none',
+            display: 'block',
+          }}
+          allow="autoplay; fullscreen"
+          frameBorder="0"
+        />
+      </div>
     </div>
   );
 };
