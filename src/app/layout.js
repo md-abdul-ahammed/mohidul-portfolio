@@ -22,7 +22,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hero/image.png",
+        url: `${siteUrl}/images/hero/image.png`,
         width: 1200,
         height: 630,
         alt: "Mohidul Islam – UI/UX Designer Portfolio",
@@ -33,7 +33,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Mohidul Islam – Expert UI/UX Designer for SaaS & Web Apps",
     description: "Helping startups and agencies create clean, high-performing digital products with thoughtful UX, clear interfaces, and measurable business impact.",
-    images: ["/images/hero/image.png"],
+    images: [`${siteUrl}/images/hero/image.png`],
   },
 };
 
