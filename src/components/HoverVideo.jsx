@@ -41,28 +41,29 @@ const HoverVideo = ({ url }) => {
       className="w-full relative overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ 
+      style={{
         width: '100%',
-        paddingTop: '56.25%', // 16:9 aspect ratio
-        position: 'relative'
+        aspectRatio: '16 / 9',
+        position: 'relative',
+        maxWidth: '100%',
       }}
     >
       <iframe
         ref={iframeRef}
         src={`${url}?background=1&responsive=1`}
-        className="absolute top-0 left-0 w-full h-full"
-        style={{ 
-          width: '100%', 
+        className="absolute top-0 left-0 w-full h-full min-w-full min-h-full"
+        style={{
+          width: '100%',
           height: '100%',
           border: 'none',
           display: 'block',
           position: 'absolute',
-          top: '0',
-          left: '0'
+          top: 0,
+          left: 0,
         }}
         allow="autoplay; fullscreen"
         frameBorder="0"
-      ></iframe>
+      />
     </div>
   );
 };
