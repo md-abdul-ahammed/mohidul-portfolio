@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   let imageUrl = null;
 
   try {
-    const res = await fetch(`${API_BASE_URL}/GET/blog_detail.php?blog_id=${id}`, { cache: 'no-store' });
+    const res = await fetch(`${API_BASE_URL}/GET/blog_detail.php?blog_id=${id}`, { next: { revalidate: 60 } });
     if (res.ok) {
       const data = await res.json();
       if (data?.success && data?.blog) {
@@ -83,12 +83,10 @@ const BlogPage = async ({ params }) => {
   let blogInfo = null;
 
   try {
-    // Fetch blog basic info
+    // Fetch blog basic info (revalidate every 60s for ISR / static build)
     const blogResponse = await fetch(
       `${API_BASE_URL}/GET/blog.php`,
-      {
-        cache: "no-store",
-      }
+      { next: { revalidate: 60 } }
     );
 
     if (blogResponse.ok) {
@@ -98,12 +96,10 @@ const BlogPage = async ({ params }) => {
       }
     }
 
-    // Fetch blog content and blog_info
+    // Fetch blog content and blog_info (revalidate every 60s for ISR / static build)
     const contentResponse = await fetch(
       `${API_BASE_URL}/GET/blog_content.php?blog_id=${id}`,
-      {
-        cache: "no-store",
-      }
+      { next: { revalidate: 60 } }
     );
 
     if (contentResponse.ok) {

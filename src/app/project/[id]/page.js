@@ -39,12 +39,10 @@ const ProjectPage = async ({ params }) => {
   let data = {};
 
   try {
-    // Fetch data from the API
+    // Fetch data from the API (revalidate every 60s for ISR / static build)
     const response = await fetch(
       `${API_BASE_URL}/GET/case_study.php?portfolio_id=${id}`,
-      {
-        cache: "no-store", // Optional: for dynamic data
-      }
+      { next: { revalidate: 60 } }
     );
 
     if (!response.ok) {
