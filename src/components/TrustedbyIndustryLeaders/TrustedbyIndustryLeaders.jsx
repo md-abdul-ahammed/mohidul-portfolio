@@ -172,7 +172,7 @@ const TrustedbyIndustryLeaders = ({ border, hidden, grouthBox, padding }) => {
 
   return (
     <div className="md:mx-2 border-b md:border-0 border-[#D3D8DF]">
-      <div className={`md:border border-[#D3D8DF] md:max-w-[1444px] mx-auto ${border}`}>
+      <div className={`md:border border-[#D3D8DF] md:max-w-[1444px] mx-auto md:overflow-hidden ${border}`}>
         <div className={`px-4 py-12 md:px-4 lg:px-5 xl:px-6 md:py-20 lg:py-26 xl:py-32 ${padding}`}>
           <div className="text-center mb-8 md:mb-10 lg:mb-11 xl:mb-12">
             <motion.h1
@@ -209,11 +209,11 @@ const TrustedbyIndustryLeaders = ({ border, hidden, grouthBox, padding }) => {
               {testimonials.map((slide, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-full flex flex-col md:flex-row justify-center mb-10"
+                  className="flex-shrink-0 w-full flex flex-col md:flex-row md:justify-start mb-10"
                 >
-                  {/* Image/Iframe Box */}
+                  {/* Image/Iframe Box - no border, no gap (Figma: columns flush) */}
                   <motion.div
-                    className="w-full md:w-[280px] lg:w-[320px] xl:w-[365px] border border-[#D3D8DF] mx-auto"
+                    className="w-full md:w-[280px] lg:w-[320px] xl:w-[365px] mx-auto md:mx-0 overflow-hidden flex-shrink-0"
                     variants={fadeInUpVariant}
                     initial="hidden"
                     whileInView="visible"
@@ -246,7 +246,7 @@ const TrustedbyIndustryLeaders = ({ border, hidden, grouthBox, padding }) => {
 
                   {/* Text Box */}
                   <motion.div
-                    className="w-full md:h-[413px] md:w-[420px] lg:w-[520px] xl:w-[642px] border-b border-x md:border-y border-[#D3D8DF] p-4 md:p-5 lg:p-7 xl:p-10 mx-auto"
+                    className="w-full md:h-[413px] md:w-[420px] lg:w-[520px] xl:w-[642px] border-b border-x md:border-y md:border-l-0 border-[#D3D8DF] p-4 md:p-5 lg:p-7 xl:p-10 mx-auto md:mx-0"
                     variants={fadeInUpVariant}
                     initial="hidden"
                     whileInView="visible"

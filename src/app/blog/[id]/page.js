@@ -7,6 +7,49 @@ import React from "react";
 
 // Use production API for static generation
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.mohidul.me';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mohidul-portfolio-five.vercel.app';
+
+// Blog share preview: use blog title and subtitle for og/twitter
+export async function generateMetadata({ params }) {
+  const { id } = await Promise.resolve(params);
+  let title = 'Blog';
+  let description = '';
+  let imageUrl = null;
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/GET/blog_detail.php?blog_id=${id}`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.success && data?.blog) {
+        title = data.blog.title || title;
+        description = data.blog.sub_title || data.blog.subtitle || '';
+        imageUrl = data.blog.image_url || null;
+      }
+    }
+  } catch (_) {}
+
+  const url = `${SITE_URL}/blog/${id}`;
+  const ogImage = imageUrl ? { url: imageUrl, width: 1200, height: 630, alt: title } : undefined;
+
+  return {
+    title: `${title} | Mohidul`,
+    description: description || 'A blog post by Mohidul Islam.',
+    openGraph: {
+      title,
+      description: description || 'A blog post by Mohidul Islam.',
+      url,
+      siteName: 'Mohidul',
+      type: 'article',
+      ...(ogImage && { images: [ogImage] }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: description || 'A blog post by Mohidul Islam.',
+      ...(ogImage && { images: [imageUrl] }),
+    },
+  };
+}
 
 // Generate static params for all blog IDs at build time
 // Required for static export with dynamic routes
@@ -95,7 +138,7 @@ const BlogPage = async ({ params }) => {
         </div>
       </div>
 
-      <RelatedBlogs tags={blogData?.tags}></RelatedBlogs>
+      <RelatedBlogs tags={blogData?.tags} currentBlogId={blogData?.id} />
       <LetsTalk></LetsTalk>
     </div>
   );

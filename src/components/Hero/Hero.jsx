@@ -39,12 +39,12 @@ const Hero = () => {
             w-full 
             h-[calc(100vh-72px)]
             lg:w-[680px] xl:w-[786px] lg:mx-auto
-            bg-cover bg-[right_25%_bottom]
+            bg-cover bg-center
             md:bg-contain md:bg-top
             bg-no-repeat 
           "
           style={{
-            backgroundImage: heroData ? `url('${heroData.hero_image}')` : "url('/images/hero/image.png')"
+            backgroundImage: heroData?.hero_image ? `url('${heroData.hero_image}')` : undefined
           }}
         />
 
@@ -129,15 +129,15 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Bottom content */}
-        <div className="absolute bottom-0 left-0 w-full flex flex-col md:flex-row justify-between items-end px-4 md:px-4 lg:px-5 xl:px-6 pb-6 md:pb-8 lg:pb-5 xl:pb-6">
+        {/* Bottom content - hero-bottom-safe: extra padding on real mobile so text isn't cut by browser nav bar */}
+        <div className="hero-bottom-safe absolute bottom-0 left-0 w-full flex flex-col md:flex-row justify-between items-end px-4 md:px-4 lg:px-5 xl:px-6 pb-6 md:pb-8 lg:pb-5 xl:pb-6">
           <div className="w-full md:w-auto text-left">
             <h4
               className="text-white md:text-[#1D1C1F] 
                 text-[20px] md:text-[1.75rem] lg:text-[2.5rem] xl:text-6xl
                 px-4 md:px-0 font-machina font-normal"
             >
-              ©2025
+              ©{new Date().getFullYear()}
             </h4>
 
             <Lottie
@@ -160,11 +160,16 @@ const Hero = () => {
                 },
                 {
                   href: ensureFullUrl(heroData?.social?.linkedin) || "https://www.linkedin.com/in/thisismohidul/",
-                  src: "/images/hero/linkedin-02.svg",
+                  src: "/images/hero/linkedin.svg",
                   alt: "linkedin",
                 },
                 {
-                  href: ensureFullUrl(heroData?.social?.facebook) ||  "https://dribbble.com/thisismohidul",
+                  href: ensureFullUrl(heroData?.social?.whatsapp) || "https://wa.me/8801710055978",
+                  src: "/images/hero/whatsapp.svg",
+                  alt: "whatsapp",
+                },
+                {
+                  href: ensureFullUrl(heroData?.social?.facebook) || "https://dribbble.com/thisismohidul",
                   src: "/images/hero/dribbble.svg",
                   alt: "dribbble",
                 },

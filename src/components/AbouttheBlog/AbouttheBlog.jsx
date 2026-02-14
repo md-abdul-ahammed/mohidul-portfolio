@@ -4,6 +4,30 @@ import { motion } from "framer-motion";
 import React from "react";
 import { neueMontreal } from "@/fonts/neueMontreal";
 
+// Turns plain URLs in text into clickable links (safe: rest of text is escaped)
+function linkify(text) {
+  if (!text || typeof text !== "string") return "";
+  const escape = (s) =>
+    String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+  const html = parts
+    .map((part) => {
+      if (/^https?:\/\//.test(part)) {
+        const href = part.replace(/[.,;:)]+$/, "");
+        const safeHref = href.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="underline text-[#1D1C1F] hover:opacity-80">${escape(part)}</a>`;
+      }
+      return escape(part);
+    })
+    .join("");
+  return html;
+}
+
 const AbouttheBlog = ({ blogContent = [], blogData }) => {
 
   if (!blogContent?.length) {
@@ -139,11 +163,12 @@ const AbouttheBlog = ({ blogContent = [], blogData }) => {
                   {item.title || `Section ${index + 1}`}
                 </h2>
 
-                <pre
+                <div
                   className={`text-base md:text-base lg:text-base xl:text-lg text-[#66656A] whitespace-pre-wrap ${neueMontreal.className}`}
-                >
-                  {item.subtitle || item.sub_title || ''}
-                </pre>
+                  dangerouslySetInnerHTML={{
+                    __html: linkify(item.subtitle || item.sub_title || ""),
+                  }}
+                />
               </div>
 
               <div className="w-full">

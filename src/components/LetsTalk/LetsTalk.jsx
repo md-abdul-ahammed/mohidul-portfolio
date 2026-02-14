@@ -178,7 +178,7 @@ const LetsTalk = ({ defaultTabValue }) => {
         <div className="md:flex mb-8 w-full">
           <div className="pb-0">
             <motion.h1
-              className="text-[#66656A] text-xl md:text-3xl lg:text-4xl mb-2"
+              className="text-[#66656A] text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-2"
               variants={fadeUpVariants}
               initial="hidden"
               whileInView="visible"
@@ -188,14 +188,14 @@ const LetsTalk = ({ defaultTabValue }) => {
             </motion.h1>
 
             <motion.h1
-              className="text-[28px] md:text-4xl lg:text-6xl font-medium"
+              className="text-[28px] md:text-3xl lg:text-4xl xl:text-5xl font-medium"
               variants={fadeUpVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              Schedule a <br /> Google Meet or <br /> Zoom Call
+              Schedule a Google Meet or <br /> Zoom Call
             </motion.h1>
           </div>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "@/config/api";
 
-const RelatedBlogs = ({ tags }) => {
+const RelatedBlogs = ({ tags, currentBlogId }) => {
   const [blogData, setBlogData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,20 +50,23 @@ const RelatedBlogs = ({ tags }) => {
       return [];
     }
 
-    return blogData.filter(blog => {
-      if (!blog.tags) return false;
+    return blogData
+      .filter(blog => {
+        if (!blog.tags) return false;
+        if (currentBlogId != null && Number(blog.id) === Number(currentBlogId)) return false;
 
-      const blogTags = blog.tags
-        .split(',')
-        .map(tag => tag.trim().toLowerCase())
-        .filter(tag => tag.length > 0);
+        const blogTags = blog.tags
+          .split(',')
+          .map(tag => tag.trim().toLowerCase())
+          .filter(tag => tag.length > 0);
 
-      const inputTags = tagArray.map(tag => tag.toLowerCase());
+        const inputTags = tagArray.map(tag => tag.toLowerCase());
 
-      return inputTags.some(inputTag =>
-        blogTags.some(blogTag => blogTag.includes(inputTag) || inputTag.includes(blogTag))
-      );
-    }).slice(0, 3);
+        return inputTags.some(inputTag =>
+          blogTags.some(blogTag => blogTag.includes(inputTag) || inputTag.includes(blogTag))
+        );
+      })
+      .slice(0, 3);
   };
 
   const relatedBlogs = getRelatedBlogs();
@@ -84,18 +87,7 @@ const RelatedBlogs = ({ tags }) => {
   }
 
   if (error) {
-    return (
-      <div className="mx-2 [@media(min-width:1440px)]:border-t [@media(min-width:1440px)]:border-[#D3D8DF]">
-        <div className="px-4 py-10 md:px-6 md:py-40 mx-auto border-b border-x border-[#D3D8DF] max-w-[1444px]">
-          <div className="mb-6">
-            <h1 className="text-[34px] text-[#1D1C1F] mb-6">Related Blogs</h1>
-          </div>
-          <div className="flex justify-center">
-            <p className="text-[#66656A]">Error loading blogs: {error}</p>
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (!relatedBlogs || relatedBlogs.length === 0) {

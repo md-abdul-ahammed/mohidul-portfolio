@@ -69,9 +69,9 @@ const SideBar = ({ caseStudyData }) => {
     const encodedDescription = encodeURIComponent(description);
     
     switch (platform) {
-      case 'facebook':
-        // Facebook automatically fetches Open Graph meta tags, but we can provide URL with quote parameter
-        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+      case 'instagram':
+        // Instagram doesn't have web share URL - link to profile
+        return ensureFullUrl(heroData?.social?.instagram) || 'https://www.instagram.com/thisismohidul/';
       case 'linkedin':
         // LinkedIn share with title
         return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
@@ -223,7 +223,7 @@ const SideBar = ({ caseStudyData }) => {
             <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
             <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2">
               {[
-                { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
                 { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
                 { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
                 { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
@@ -355,10 +355,10 @@ const SideBar = ({ caseStudyData }) => {
                 <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                   {[
                     {
-                      platform: 'facebook',
-                      href: getShareUrl('facebook'),
-                      src: "/images/hero/facebook.svg",
-                      alt: "facebook",
+                      platform: 'instagram',
+                      href: getShareUrl('instagram'),
+                      src: "/images/hero/instagram.svg",
+                      alt: "instagram",
                     },
                     {
                       platform: 'linkedin',
@@ -534,14 +534,14 @@ const SideBar = ({ caseStudyData }) => {
               />
             </div>
 
-            {/* Share title + icons */}
+            {/* Share title + icons - same size (30px) as non-sticky for consistency */}
             <div className="mt-4 mb-2 text-center">
               <h5 className="text-base text-[#1D1C1F]">
                 Share this Case Study:
               </h5>
               <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                 {[
-                  { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                  { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
                   { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
                   { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
                   { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
@@ -556,9 +556,16 @@ const SideBar = ({ caseStudyData }) => {
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={22}
-                        height={22}
-                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        width={30}
+                        height={30}
+                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: 'none' }}
+                        onMouseEnter={(e) => {
+                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.filter = 'none';
+                        }}
                         unoptimized
                       />
                     </button>
@@ -573,9 +580,16 @@ const SideBar = ({ caseStudyData }) => {
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={22}
-                        height={22}
-                        className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110"
+                        width={30}
+                        height={30}
+                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: 'none' }}
+                        onMouseEnter={(e) => {
+                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.filter = 'none';
+                        }}
                         unoptimized
                       />
                     </a>

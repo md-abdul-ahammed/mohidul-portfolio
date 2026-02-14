@@ -35,6 +35,20 @@ body {
   box-shadow: none;
 }
 
+/* Hero bottom text: on real mobile, extra padding so text isn't cut by browser nav bar (inspect doesn't show this) */
+@media (max-width: 767px) {
+  .hero-bottom-safe {
+    padding-bottom: max(4rem, calc(1.5rem + env(safe-area-inset-bottom, 0px)));
+  }
+}
+
+/* About Me: no inner scroll on Experiences – content flows with page scroll, not a scrollbar in the section */
+.about-me-right-column,
+.about-me-experiences {
+  overflow: visible !important;
+  max-height: none !important;
+}
+
 
 
 

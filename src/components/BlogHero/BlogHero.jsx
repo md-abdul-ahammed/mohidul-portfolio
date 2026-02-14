@@ -20,8 +20,6 @@ const BlogHero = ({ blogHeroData, breadcrumbType = "Blog" }) => {
   const {
     image_url,
     sub_title,
-    iframe,
-    video,
     tags: rawTags = [],
     title,
   } = blogHeroData || {};
@@ -30,9 +28,6 @@ const BlogHero = ({ blogHeroData, breadcrumbType = "Blog" }) => {
   const tags = typeof rawTags === 'string' 
     ? rawTags.split(',').map(t => t.trim()).filter(Boolean)
     : (Array.isArray(rawTags) ? rawTags : []);
-
-  console.log("iframe", iframe);
-  console.log("video", video);
 
   return (
     <div className="mx-2 mt-18">
@@ -62,7 +57,7 @@ const BlogHero = ({ blogHeroData, breadcrumbType = "Blog" }) => {
           animate="visible"
           custom={2}
         >
-          <h1 className="text-[34px] md:text-5xl lg:text-8xl text-[#1D1C1F] mb-4 md:mb-6 md:whitespace-normal lg:whitespace-nowrap">
+          <h1 className="text-[28px] md:text-4xl lg:text-5xl text-[#1D1C1F] mb-4 md:mb-6 break-words">
             {title}
           </h1>
 
@@ -102,54 +97,20 @@ const BlogHero = ({ blogHeroData, breadcrumbType = "Blog" }) => {
           </div>
         </motion.div>
 
-        {/* Image */}
+        {/* Image only (no video/iframe) */}
         <motion.div
           variants={fadeInUp}
           initial="hidden"
           animate="visible"
           custom={5}
         >
-          {iframe && (
-            <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
-              <div className="absolute inset-0 w-full h-full">
-                <iframe
-                  src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
-                  className="absolute top-1/2 left-1/2 w-[177.78%] h-[177.78%] -translate-x-1/2 -translate-y-1/2"
-                  style={{
-                    minWidth: '100%',
-                    minHeight: '100%'
-                  }}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          )}
-          {!iframe && video && (
-            <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
-              <video
-                src={video}
-                width="100%"
-                height="450"
-                className="absolute top-0 left-0 w-full h-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-              />
-            </div>
-          )}
-          {!iframe && !video && (
-            <Image
-              src={image_url || "/images/project/projectHero.svg"}
-              alt={title || "blog image"}
-              width={687}
-              height={450}
-              className="w-full h-auto"
-            />
-          )}
+          <Image
+            src={image_url || "/images/project/projectHero.svg"}
+            alt={title || "blog image"}
+            width={687}
+            height={450}
+            className="w-full h-auto"
+          />
         </motion.div>
       </div>
     </div>

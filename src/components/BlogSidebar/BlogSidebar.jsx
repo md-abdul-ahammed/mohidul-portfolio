@@ -67,9 +67,9 @@ const BlogSidebar = ({ blogInfo }) => {
     const encodedDescription = encodeURIComponent(description);
     
     switch (platform) {
-      case 'facebook':
-        // Facebook automatically fetches Open Graph meta tags, but we can provide URL with quote parameter
-        return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`;
+      case 'instagram':
+        // Instagram doesn't have web share URL - link to profile
+        return ensureFullUrl(heroData?.social?.instagram) || 'https://www.instagram.com/thisismohidul/';
       case 'linkedin':
         // LinkedIn share with title
         return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
@@ -128,6 +128,8 @@ const BlogSidebar = ({ blogInfo }) => {
 
   // Helper function to check if source link exists
   const hasSource = blogData.source_link && String(blogData.source_link).trim() !== '' && String(blogData.source_link).trim() !== 'undefined';
+  // Show Published only when date is given
+  const hasPublished = blogData.published_date && String(blogData.published_date).trim() !== '' && String(blogData.published_date).trim() !== 'undefined';
 
   return (
     <div className="mx-2 md:mx-0 md:w-[280px] lg:w-[320px] xl:w-[365px]">
@@ -152,7 +154,7 @@ const BlogSidebar = ({ blogInfo }) => {
           </div>
         </div>
         
-        {/* Row 2: READING TIME and PUBLISHED */}
+        {/* Row 2: READING TIME and PUBLISHED (Published only when date is given) */}
         <div className={`grid grid-cols-2 gap-4 mb-4 pb-4 ${hasSource ? "border-b border-[#D3D8DF]" : ""}`}>
           {/* 3 */}
           <div>
@@ -161,13 +163,15 @@ const BlogSidebar = ({ blogInfo }) => {
               {blogData.reading_time || 'N/A'}
             </h5>
           </div>
-          {/* 4 */}
-          <div>
-            <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
-            <h5 className="text-base font-medium mt-1">
-              {blogData.published_date || 'N/A'}
-            </h5>
-          </div>
+          {/* 4 - only show when published_date is set */}
+          {hasPublished && (
+            <div>
+              <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
+              <h5 className="text-base font-medium mt-1">
+                {blogData.published_date}
+              </h5>
+            </div>
+          )}
         </div>
 
         {/* 5 */}
@@ -218,7 +222,7 @@ const BlogSidebar = ({ blogInfo }) => {
             <h5 className="text-base text-[#1D1C1F]">Share this Blog:</h5>
             <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2">
               {[
-                { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
                 { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
                 { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
                 { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
@@ -281,13 +285,15 @@ const BlogSidebar = ({ blogInfo }) => {
                     {blogData.reading_time || 'N/A'}
                   </h5>
                 </div>
-                {/* 4 */}
+                {/* 4 - only when date is given */}
+                {hasPublished && (
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
                   <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {blogData.published_date || 'N/A'}
+                    {blogData.published_date}
                   </h5>
                 </div>
+                )}
               </div>
 
               {/* 5 */}
@@ -349,10 +355,10 @@ const BlogSidebar = ({ blogInfo }) => {
                 <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                   {[
                     {
-                      platform: 'facebook',
-                      href: getShareUrl('facebook'),
-                      src: "/images/hero/facebook.svg",
-                      alt: "facebook",
+                      platform: 'instagram',
+                      href: getShareUrl('instagram'),
+                      src: "/images/hero/instagram.svg",
+                      alt: "instagram",
                     },
                     {
                       platform: 'linkedin',
@@ -472,13 +478,15 @@ const BlogSidebar = ({ blogInfo }) => {
                   {blogData.reading_time || 'N/A'}
                 </h5>
               </div>
-              {/* 4 */}
+              {/* 4 - only when date is given */}
+              {hasPublished && (
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
                 <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {blogData.published_date || 'N/A'}
+                  {blogData.published_date}
                 </h5>
               </div>
+              )}
             </div>
 
             {/* 5 */}
@@ -534,7 +542,7 @@ const BlogSidebar = ({ blogInfo }) => {
               </h5>
               <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                 {[
-                  { platform: 'facebook', href: getShareUrl('facebook'), src: "/images/hero/facebook.svg", alt: "facebook" },
+                  { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
                   { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
                   { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
                   { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },

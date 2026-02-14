@@ -161,7 +161,7 @@ const AboutMe = () => {
           className="max-w-[1444px] py-6 md:py-12 border-[#D3D8DF] md:border-x mx-auto w-full"
           variants={containerVariants}
         >
-          <div className="flex flex-col md:flex-row md:gap-6 lg:gap-12 xl:gap-16 md:justify-between items-center md:px-4 lg:px-5 xl:px-6 md:pt-10 lg:pt-12 xl:pt-16 md:pb-10 lg:pb-12 xl:pb-16">
+          <div className="flex flex-col md:flex-row md:gap-6 lg:gap-12 xl:gap-16 md:justify-between items-start md:items-center md:px-4 lg:px-5 xl:px-6 md:pt-10 lg:pt-12 xl:pt-16 md:pb-10 lg:pb-12 xl:pb-16">
             {/* Left Column */}
             <motion.div className="w-full md:w-auto" variants={containerVariants}>
               {/* title */}
@@ -192,7 +192,6 @@ const AboutMe = () => {
                       display: "block",
                     }}
                     controls
-                    autoPlay
                     muted
                     loop
                   />
@@ -326,8 +325,8 @@ const AboutMe = () => {
               </motion.div>
             </motion.div>
 
-            {/* Right Column */}
-            <motion.div className="hidden md:block w-full md:w-auto" variants={containerVariants}>
+            {/* Right Column - no inner scroll: content flows with page (overflow-visible) */}
+            <motion.div className="about-me-right-column hidden md:block w-full md:w-auto overflow-visible min-h-0" variants={containerVariants}>
               {/* main-text (desktop) with enhanced scroll-based color animation */}
               <motion.div
                 ref={textRef}
@@ -354,8 +353,8 @@ const AboutMe = () => {
                 </h3>
               </motion.div>
 
-              {/* table with enhanced animations */}
-              <motion.div variants={fadeInUp}>
+              {/* table with enhanced animations - no inner scrollbar, content flows with page */}
+              <motion.div className="about-me-experiences overflow-visible" variants={fadeInUp}>
                 <motion.div
                   className="md:text-lg lg:text-xl xl:text-2xl text-xl font-bold text-[#1D1C1F] mt-7 mb-4"
                   variants={itemAnimation}
@@ -363,7 +362,7 @@ const AboutMe = () => {
                   <h3>Experiences</h3>
                 </motion.div>
 
-                <motion.div variants={containerVariants}>
+                <motion.div className="overflow-visible" variants={containerVariants}>
                   {[
                     {
                       role: "Lead UI/UX Designer",

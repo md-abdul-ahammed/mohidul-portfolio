@@ -107,13 +107,11 @@ const ProjectHero = ({ projectHeroData, breadcrumbType = "Case" }) => {
           {iframe && (
             <div className="relative pb-[56.25%] h-0 overflow-hidden bg-black">
               <div className="absolute inset-0 w-full h-full">
+                {/* Slight scale (120%) for full-width feel without heavy zoom like 177.78% */}
                 <iframe
                   src={`${iframe}?autoplay=1&muted=1&controls=0&loop=1&background=1`}
-                  className="absolute top-1/2 left-1/2 w-[177.78%] h-[177.78%] -translate-x-1/2 -translate-y-1/2"
-                  style={{
-                    minWidth: '100%',
-                    minHeight: '100%'
-                  }}
+                  className="absolute top-1/2 left-1/2 w-[120%] h-[120%] -translate-x-1/2 -translate-y-1/2"
+                  style={{ border: 'none' }}
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen

@@ -127,18 +127,20 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
     return patterns[position];
   };
 
-  // Determine content layout based on index
-  const getContentLayout = (index) => {
+  // Determine content layout: for blogs use flex-wrap (dynamic by title length),
+  // for portfolio use index-based layout
+  const getContentLayout = (index, isBlogs = false) => {
+    if (isBlogs) {
+      // Dynamic: short title → tags পাশে, long title → tags nicher new row
+      // flex-row + flex-wrap: when title+tags don't fit, tags wrap to new row
+      return "mt-3 md:mt-2 flex flex-row flex-wrap items-start gap-x-3 gap-y-2";
+    }
     const imageDimensions = getImageDimensions(index);
     const isWide = imageDimensions.width === 700 || imageDimensions.width === 687;
-    
     if (isWide) {
-      // Wide images: title and tags side by side
       return "mt-3 md:mt-2 flex flex-col md:flex-row md:justify-between md:items-center";
-    } else {
-      // Narrow images: tags below title
-      return "mt-3 md:mt-2 flex flex-col";
     }
+    return "mt-3 md:mt-2 flex flex-col";
   };
 
   // Create refs for the maximum possible items we might have
@@ -225,7 +227,7 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
             {(title ? portfolioData : portfolioData.slice(0, 6)).map((item, index) => {
               const layoutClass = getLayoutClass(index);
               const imageDimensions = getImageDimensions(index);
-              const contentLayout = getContentLayout(index);
+              const contentLayout = getContentLayout(index, apiEndpoint === "blogs");
               const { ref } = portfolioRefs[index] || {};
 
               return (
@@ -241,10 +243,10 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
                         animationDelay={0.1}
                       />
                       <div className={contentLayout}>
-                        <h4 className="text-[24px] md:text-[22px] lg:text-[28px] xl:text-[34px] text-[#1D1C1F] font-medium leading-tight">
+                        <h4 className={`text-[24px] md:text-[22px] lg:text-[28px] xl:text-[34px] text-[#1D1C1F] font-medium leading-tight ${apiEndpoint === "blogs" ? "min-w-0 break-words" : ""}`}>
                           {item.title}
                         </h4>
-                        <div className="text-[#66656A] text-sm flex flex-wrap gap-2 mt-2">
+                        <div className={`text-[#66656A] text-sm flex flex-wrap gap-2 ${apiEndpoint === "blogs" ? "flex-shrink-0" : "mt-2"}`}>
                           {item.tags && item.tags.split(",").map((tag, tagIndex) => (
                             <p
                               key={tagIndex}
