@@ -13,38 +13,6 @@ import TrustedBy from "@/components/TrustedBy/TrustedBy";
 import TrustedbyIndustryLeaders from "@/components/TrustedbyIndustryLeaders/TrustedbyIndustryLeaders";
 import WhatIDo from "@/components/WhatIDo/WhatIDo";
 import Image from "next/image";
-import { API_ENDPOINTS } from "@/config/api";
-
-export async function generateMetadata() {
-  let ogImageUrl = null;
-  try {
-    const res = await fetch(API_ENDPOINTS.HERO, { cache: "no-store" });
-    if (res.ok) {
-      const data = await res.json();
-      if (data?.success && data?.hero_section?.hero_image) {
-        ogImageUrl = data.hero_section.hero_image;
-      }
-    }
-  } catch (_) {}
-
-  return {
-    openGraph: {
-      images: ogImageUrl
-        ? [
-            {
-              url: ogImageUrl,
-              width: 1200,
-              height: 630,
-              alt: "Mohidul Islam – UI/UX Designer Portfolio",
-            },
-          ]
-        : undefined,
-    },
-    twitter: {
-      images: ogImageUrl ? [ogImageUrl] : undefined,
-    },
-  };
-}
 
 export default function HomePage() {
   return (
