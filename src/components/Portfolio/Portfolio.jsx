@@ -91,37 +91,37 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
         width: 700,
         height: 500,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px]",
       },
       {
         width: 448,
         height: 300,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[310px] md:h-[210px] lg:w-[360px] lg:h-[250px] xl:w-[448px] xl:h-[300px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[310px] md:h-[210px] lg:w-[360px] lg:h-[250px] xl:w-[448px] xl:h-[300px]",
       },
       {
         width: 700,
         height: 500,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px]",
       },
       {
         width: 687,
         height: 450,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px]",
       },
       {
         width: 448,
         height: 300,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[310px] md:h-[210px] lg:w-[360px] lg:h-[250px] xl:w-[448px] xl:h-[300px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[310px] md:h-[210px] lg:w-[360px] lg:h-[250px] xl:w-[448px] xl:h-[300px]",
       },
       {
         width: 700,
         height: 500,
         className:
-          "w-full max-w-[360px] h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px] max-w-none mx-auto md:mx-0",
+          "w-full h-[250px] md:w-[380px] md:h-[300px] lg:w-[480px] lg:h-[360px] xl:w-[700px] xl:h-[500px]",
       },
     ];
     return patterns[position];
@@ -233,7 +233,7 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
               return (
                 <div key={item.id} ref={ref} className={layoutClass}>
                   <Link href={apiEndpoint === "blogs" ? `/blog/${item.id}?${item.title.replaceAll(" ", "_")}` : `/project/${item.id}?${item.title.replaceAll(" ", "_")}`}>
-                    <div className={`inline-block ${imageDimensions.width === 700 ? 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]' : imageDimensions.width === 448 ? 'w-full md:w-[310px] lg:w-[360px] xl:w-[448px]' : 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]'}`}>
+                    <div className={`block md:inline-block ${imageDimensions.width === 700 ? 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]' : imageDimensions.width === 448 ? 'w-full md:w-[310px] lg:w-[360px] xl:w-[448px]' : 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]'}`}>
                       <AnimatedImage
                         src={item.image}
                         alt={item.title}
