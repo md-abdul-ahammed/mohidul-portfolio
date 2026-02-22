@@ -69,6 +69,13 @@ const AbouttheProject = ({ aboutTheProject = [], data }) => {
     );
   }
 
+  // Check if URL is a video file (e.g. MP4 from backend upload)
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    const u = url.split("?")[0].toLowerCase();
+    return /\.(mp4|webm|ogg|mov)(\?|$)/i.test(u);
+  };
+
   // MEDIA RENDER FUNCTION for aboutTheProject sections
   const renderMedia = (item) => {
     if (item.media_type === "iframe" && item.media_url) {
@@ -77,7 +84,36 @@ const AbouttheProject = ({ aboutTheProject = [], data }) => {
       );
     }
 
+    // Uploaded video file (MP4 etc.) – backend now returns media_type: 'video'
+    if (item.media_type === "video" && item.media_url) {
+      return (
+        <video
+          src={encodeURI(item.media_url)}
+          controls
+          playsInline
+          className="w-full h-auto block"
+          style={{ width: "100%", height: "auto", display: "block" }}
+        >
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+
     if (item.media_type === "image" && item.media_url) {
+      // Fallback: if somehow a video URL still ends up with media_type "image"
+      if (isVideoUrl(item.media_url)) {
+        return (
+          <video
+            src={encodeURI(item.media_url)}
+            controls
+            playsInline
+            className="w-full h-auto block"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          >
+            Your browser does not support the video tag.
+          </video>
+        );
+      }
       return (
         <Image
           src={item.media_url}
@@ -99,22 +135,35 @@ const AbouttheProject = ({ aboutTheProject = [], data }) => {
     if (item.images?.length > 0) {
       return (
         <div className="grid gap-4">
-          {item.images.map((img, idx) => (
-            <Image
-              key={idx}
-              src={img}
-              alt={`${item.title || "Project"} image ${idx + 1}`}
-              width={2000}
-              height={1000}
-              className="w-full h-auto block"
-              style={{ 
-                width: '100%',
-                height: 'auto',
-                display: 'block'
-              }}
-              sizes="100vw"
-            />
-          ))}
+          {item.images.map((img, idx) =>
+            isVideoUrl(img) ? (
+              <video
+                key={idx}
+                src={encodeURI(img)}
+                controls
+                playsInline
+                className="w-full h-auto block"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <Image
+                key={idx}
+                src={img}
+                alt={`${item.title || "Project"} image ${idx + 1}`}
+                width={2000}
+                height={1000}
+                className="w-full h-auto block"
+                style={{ 
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+                sizes="100vw"
+              />
+            )
+          )}
         </div>
       );
     }

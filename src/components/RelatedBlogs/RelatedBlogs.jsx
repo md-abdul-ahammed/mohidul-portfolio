@@ -117,7 +117,7 @@ const RelatedBlogs = ({ tags, currentBlogId }) => {
                 {/* Blog Image */}
                 <div className="relative h-[250px] w-full overflow-hidden">
                   <Image
-                    src={blog.image_url || '/placeholder-blog.jpg'}
+                    src={blog.image_url || blog.image || '/placeholder-blog.jpg'}
                     alt={blog.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Footer/Footer";
 import InitialLoader from "@/components/InitialLoader";
+import LenisProvider from "@/components/LenisProvider";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://mohidul-portfolio-five.vercel.app";
 
@@ -45,11 +46,11 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
       >
         <InitialLoader />
-
-        {/* 🚀 Smooth Scroll Wrapper */}
-        <Navbar />
-        {children}
-        <Footer />
+        <LenisProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </LenisProvider>
       </body>
     </html>
   );

@@ -1,11 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import Insta from "../svg/commons/insta";
-import Linkdin from "../svg/commons/linkdin";
-import Dribb from "../svg/commons/Dribb";
-import Brhance from "../svg/commons/Brhance";
-import WhatsApp from "../svg/commons/WhatsApp";
 import Link from "next/link";
 import AnimatedButton from "../AnimatedButtons";
 import { useRouter } from "next/navigation";
@@ -110,69 +105,45 @@ const Footer = () => {
   // Use API images if available, otherwise use fallback
   const displayImages = galleryImages.length > 0 ? galleryImages : defaultImgs;
 
-  // Default social links in case API fails
-  const defaultSocialLinks = [
+  const ensureFullUrl = (url) => {
+    if (!url || typeof url !== "string") return "";
+    return url.startsWith("http") ? url : `https://${url.replace(/^\/+/, "")}`;
+  };
+
+  // Same icon set as hero section – use hero section image assets
+  const socialLinksToUse = [
     {
-      href: "https://www.instagram.com/thisismohidul/",
-      component: <Insta />,
+      href: socialLinks ? ensureFullUrl(socialLinks.instagram) : "https://www.instagram.com/thisismohidul/",
+      src: "/images/footer/instagram.svg",
       alt: "instagram",
     },
     {
       href: "https://wa.me/8801710055978",
-      component: <WhatsApp />,
+      src: "/images/footer/whatsapp.svg",
       alt: "whatsapp",
     },
     {
-      href: "https://www.linkedin.com/in/thisismohidul/",
-      component: <Linkdin />,
+      href: socialLinks ? ensureFullUrl(socialLinks.linkedin) : "https://www.linkedin.com/in/thisismohidul/",
+      src: "/images/footer/linkedin.svg",
       alt: "linkedin",
     },
     {
-      href: "https://dribbble.com/thisismohidul",
-      component: <Dribb />,
+      href: socialLinks ? ensureFullUrl(socialLinks.facebook) : "https://dribbble.com/thisismohidul",
+      src: "/images/footer/dribbble.svg",
       alt: "dribbble",
     },
     {
-      href: "https://www.behance.net/thisismohidul",
-      component: <Brhance />,
+      href: socialLinks ? ensureFullUrl(socialLinks.twitter) : "https://www.behance.net/thisismohidul",
+      src: "/images/footer/behance.svg",
       alt: "behance",
     },
   ];
-
-  // Use API social links if available, otherwise use fallback
-  const socialLinksToUse = socialLinks ? [
-    {
-      href: socialLinks.instagram,
-      component: <Insta />,
-      alt: "instagram",
-    },
-    {
-      href: "https://wa.me/8801710055978",
-      component: <WhatsApp />,
-      alt: "whatsapp",
-    },
-    {
-      href: socialLinks.linkedin,
-      component: <Linkdin />,
-      alt: "linkedin",
-    },
-    {
-      href: socialLinks.facebook, // Note: API returns dribbble as facebook key
-      component: <Dribb />,
-      alt: "dribbble",
-    },
-    {
-      href: socialLinks.twitter, // Note: API returns behance as twitter key
-      component: <Brhance />,
-      alt: "behance",
-    },
-  ] : defaultSocialLinks;
 
   return (
     <div className="md:mx-2 relative">
       <div className="bg-black text-center md:max-w-[1444px] mx-auto">
         {/* top section */}
-        <div className="flex justify-between items-center px-4 pt-12 md:px-4 lg:px-5 xl:px-6 md:pt-10 lg:pt-12 xl:pt-16">
+        <div className="flex justify-between items-center px-4 pt-12 md:px-4 lg:px-5 xl:px-6 md:pt-10 mb-4 lg:pt-12 xl:pt-16">
           <div className="flex items-center gap-2.5 cursor-pointer" onClick={copyEmail}>
             <h5 className="text-white text-base md:text-base lg:text-lg xl:text-xl">Copy email</h5>
             <Image
@@ -185,20 +156,25 @@ const Footer = () => {
           </div>
 
           <div>
-            <div className="md:flex h-[53px] flex-col text-left">
-              <h6 className="text-sm text-white">Social Link</h6>
-              <div className="flex border border-[#D3D8DF] w-fit">
-                {socialLinksToUse.map((social, index, array) => (
+            <div className="md:flex w-fit h-[51px] flex-col text-left">
+              <h6 className="font-machina text-sm text-white mb-[4px]">Social Link</h6>
+              <div className="flex border border-[#D3D8DF] w-fit shrink-0">
+                {socialLinksToUse.map((social) => (
                   <a
                     key={social.alt}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group "
+                    className="w-[33px] h-[33px] min-w-[33px] min-h-[33px] p-[5.5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group hover:bg-[#F5F6F7]/10 box-border"
                   >
-                    <div className="transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90">
-                      {social.component}
-                    </div>
+                    <Image
+                      src={social.src}
+                      alt={social.alt}
+                      width={22}
+                      height={22}
+                      className={`w-[22px] h-[22px] flex-shrink-0 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90 ${!social.src.startsWith("/images/footer/") ? "invert" : ""}`}
+                      unoptimized
+                    />
                   </a>
                 ))}
               </div>

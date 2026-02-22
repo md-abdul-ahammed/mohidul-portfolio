@@ -195,7 +195,7 @@ const LetsTalk = ({ defaultTabValue }) => {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              Schedule a Google Meet or <br /> Zoom Call
+              Schedule a Google <br /> Meet or Zoom Call
             </motion.h1>
           </div>
 
@@ -203,7 +203,7 @@ const LetsTalk = ({ defaultTabValue }) => {
             animationData={animationData}
             loop={true}
             autoplay={true}
-            style={{ width: '300px', height: 'auto' }}
+            style={{ width: "300px", height: "auto" }}
             className="hidden md:flex relative md:left-[10%] lg:left-[20%] xl:left-[30%] 2xl:left-[37%] md:top-[30px] lg:top-[50px] md:w-[220px] lg:w-[250px] xl:w-[280px] 2xl:w-[300px]"
           />
         </div>
@@ -221,14 +221,16 @@ const LetsTalk = ({ defaultTabValue }) => {
             animationData={animationData}
             loop={true}
             autoplay={true}
-            style={{ width: '250px', height: 'auto' }}
+            style={{ width: "250px", height: "auto" }}
             className="transform scale-x-[-1]"
           />
         </motion.div>
 
         {/* Message Display */}
         {message && (
-          <div className={`mb-4 p-4 rounded ${message.includes("successfully") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+          <div
+            className={`mb-4 p-4 rounded ${message.includes("successfully") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+          >
             {message}
           </div>
         )}
@@ -245,19 +247,17 @@ const LetsTalk = ({ defaultTabValue }) => {
           {/* Header (two columns) */}
           <div className="grid grid-cols-2 text-center">
             <div
-              className={`py-4 md:py-5 border border-[#D3D8DF] text-lg md:text-2xl font-medium cursor-pointer transition-all duration-300 ${activeTab === "project"
-                ? "bg-[#34C779]"
-                : "bg-white hover:bg-gray-50"
-                }`}
+              className={`py-4 md:py-5 border border-[#D3D8DF] text-lg md:text-2xl font-medium cursor-pointer transition-all duration-300 ${
+                activeTab === "project" ? "bg-[#34C779]" : "bg-white hover:bg-gray-50"
+              }`}
               onClick={() => setActiveTab("project")}
             >
               Project Request
             </div>
             <div
-              className={`py-4 md:py-5 border border-[#D3D8DF] text-lg md:text-2xl font-medium cursor-pointer transition-all duration-300 ${activeTab === "meeting"
-                ? "bg-[#34C779]"
-                : "bg-white hover:bg-gray-50"
-                }`}
+              className={`py-4 md:py-5 border border-[#D3D8DF] text-lg md:text-2xl font-medium cursor-pointer transition-all duration-300 ${
+                activeTab === "meeting" ? "bg-[#34C779]" : "bg-white hover:bg-gray-50"
+              }`}
               onClick={() => setActiveTab("meeting")}
             >
               Book a Meeting
@@ -353,10 +353,7 @@ const LetsTalk = ({ defaultTabValue }) => {
                 {/* Row 6 */}
                 <div className="p-4 md:py-6 md:px-10 border-t border-[#D3D8DF]">
                   <div className="flex flex-col justify-between items-start gap-4">
-                    <label
-                      htmlFor="helper-checkbox-m"
-                      className="flex gap-2 cursor-pointer"
-                    >
+                    <label htmlFor="helper-checkbox-m" className="flex gap-2 cursor-pointer">
                       <input
                         id="helper-checkbox-m"
                         type="checkbox"
@@ -364,8 +361,8 @@ const LetsTalk = ({ defaultTabValue }) => {
                         required
                       />
                       <span className="text-base md:text-lg font-medium">
-                        Your email address is kept strictly confidential and
-                        will never be shared with third-party websites.
+                        Your email address is kept strictly confidential and will never be shared with third-party
+                        websites.
                       </span>
                     </label>
                     <button className="w-full md:w-auto" type="submit" disabled={isLoading}>
@@ -379,20 +376,20 @@ const LetsTalk = ({ defaultTabValue }) => {
                 </div>
               </form>
             ) : (
-              <div 
+              <div
                 className="w-full h-screen bg-white"
-                style={{ 
-                  backgroundColor: '#FFFFFF',
-                  colorScheme: 'light'
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  colorScheme: "light",
                 }}
               >
                 <iframe
                   src="https://cal.com/thisismohidul/30min?theme=light&embed=true&overlayCalendar=true&brandColor=%23000000&lightMode=%23FFFFFF"
                   className="w-full h-screen border-0"
-                  style={{ 
-                    backgroundColor: '#FFFFFF',
-                    colorScheme: 'light',
-                    background: '#FFFFFF'
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    colorScheme: "light",
+                    background: "#FFFFFF",
                   }}
                   title="Book a meeting"
                   loading="lazy"
@@ -415,19 +412,17 @@ const LetsTalk = ({ defaultTabValue }) => {
             <thead className="text-center">
               <tr>
                 <th
-                  className={`w-1/2 md:py-4 lg:py-5 border border-[#D3D8DF] md:text-xl lg:text-2xl font-medium cursor-pointer transition-all duration-300 ${activeTab === "project"
-                    ? "bg-[#34C779]"
-                    : "bg-white hover:bg-gray-50"
-                    }`}
+                  className={`w-1/2 md:py-4 lg:py-5 border border-[#D3D8DF] md:text-xl lg:text-2xl font-medium cursor-pointer transition-all duration-300 ${
+                    activeTab === "project" ? "bg-[#34C779]" : "bg-white hover:bg-gray-50"
+                  }`}
                   onClick={() => setActiveTab("project")}
                 >
                   Project Request
                 </th>
                 <th
-                  className={`w-1/2 md:py-4 lg:py-5 border border-[#D3D8DF] md:text-xl lg:text-2xl font-medium cursor-pointer transition-all duration-300 ${activeTab === "meeting"
-                    ? "bg-[#34C779]"
-                    : "bg-white hover:bg-gray-50"
-                    }`}
+                  className={`w-1/2 md:py-4 lg:py-5 border border-[#D3D8DF] md:text-xl lg:text-2xl font-medium cursor-pointer transition-all duration-300 ${
+                    activeTab === "meeting" ? "bg-[#34C779]" : "bg-white hover:bg-gray-50"
+                  }`}
                   onClick={() => setActiveTab("meeting")}
                 >
                   Book a Meeting
@@ -527,15 +522,9 @@ const LetsTalk = ({ defaultTabValue }) => {
 
                   {/* Row 6 */}
                   <tr>
-                    <td
-                      colSpan="2"
-                      className="md:py-4 lg:py-6 md:px-5 lg:px-10 border border-[#D3D8DF]"
-                    >
+                    <td colSpan="2" className="md:py-4 lg:py-6 md:px-5 lg:px-10 border border-[#D3D8DF]">
                       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-                        <label
-                          htmlFor="helper-checkbox"
-                          className="flex items-start gap-2 cursor-pointer"
-                        >
+                        <label htmlFor="helper-checkbox" className="flex items-start gap-2 cursor-pointer">
                           <input
                             id="helper-checkbox"
                             type="checkbox"
@@ -543,8 +532,8 @@ const LetsTalk = ({ defaultTabValue }) => {
                             required
                           />
                           <span className="md:text-base lg:text-lg font-medium md:w-[280px] lg:w-[434px]">
-                            Your email address is kept strictly confidential and
-                            will never be shared with third-party websites.
+                            Your email address is kept strictly confidential and will never be shared with third-party
+                            websites.
                           </span>
                         </label>
                         <button type="button" onClick={handleSubmit} disabled={isLoading}>
@@ -562,20 +551,20 @@ const LetsTalk = ({ defaultTabValue }) => {
                 /* Cal.com Meeting Booking - Full width */
                 <tr>
                   <td colSpan="2" className="border border-[#D3D8DF]">
-                    <div 
+                    <div
                       className="w-full h-screen bg-white"
-                      style={{ 
-                        backgroundColor: '#FFFFFF',
-                        colorScheme: 'light'
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                        colorScheme: "light",
                       }}
                     >
                       <iframe
                         src="https://cal.com/thisismohidul/30min?theme=light&embed=true&overlayCalendar=true&brandColor=%23000000&lightMode=%23FFFFFF"
                         className="w-full h-screen border-0"
-                        style={{ 
-                          backgroundColor: '#FFFFFF',
-                          colorScheme: 'light',
-                          background: '#FFFFFF'
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          colorScheme: "light",
+                          background: "#FFFFFF",
                         }}
                         title="Book a meeting"
                         loading="lazy"

@@ -138,42 +138,41 @@ const SideBar = ({ caseStudyData }) => {
           {/* 1 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">CLIENT</p>
-            <h5 className="text-base font-medium mt-1">
-              {caseStudy.client_name}
-            </h5>
+            <h5 className="text-base font-medium mt-1">{caseStudy.client_name}</h5>
           </div>
           {/* 2 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
-            <h5 className="text-base font-medium mt-1">
-              {caseStudy.category}
-            </h5>
+            <h5 className="text-base font-medium mt-1">{caseStudy.category}</h5>
           </div>
         </div>
-        
+
         {/* Row 2: TIMELINE and LIVE VIEW */}
         <div className={`grid grid-cols-2 gap-4 mb-4 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}>
           {/* 3 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">TIMELINE</p>
-            <h5 className="text-base font-medium mt-1">
-              {caseStudy.timeline}
-            </h5>
+            <h5 className="text-base font-medium mt-1">{caseStudy.timeline}</h5>
           </div>
           {/* 4 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">LIVE VIEW</p>
             <h5 className="text-base font-medium mt-1">
               {caseStudy.project_link ? (
-                <a 
-                  href={caseStudy.project_link} 
-                  target="_blank" 
+                <a
+                  href={caseStudy.project_link}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="underline flex items-center gap-1"
                 >
                   Project Link
                   <svg className="w-4 h-4" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z"
+                      fill="#1D1C1F"
+                    />
                   </svg>
                 </a>
               ) : (
@@ -199,58 +198,81 @@ const SideBar = ({ caseStudyData }) => {
           </div>
         )}
 
-          {/* Button */}
-          <div className="mt-4 flex justify-center">
-            <Link href={'/book-a-call'}>
-              <button className="py-3 px-4 sm:px-[35px] bg-[#34C779] font-medium text-[15px] sm:text-[17px] cursor-pointer flex items-center">
-                <Image
-                  src={"/images/Ideas/01.png"}
-                  alt="phone"
-                  width={34}
-                  height={34}
-                  className="inline mr-2"
-                />
-                Book a call with Mohidul{" "}
-                <div className="w-[24px] h-[24px] ml-1.5">
-                  <MoveUpRight />
-                </div>
-              </button>
-            </Link>
-          </div>
+        {/* Button */}
+        <div className="mt-4 flex justify-center">
+          <Link href={"/book-a-call"}>
+            <button className="py-3 px-4 sm:px-[35px] bg-[#34C779] font-medium text-[15px] sm:text-[17px] cursor-pointer flex items-center">
+              <Image src={"/images/Ideas/01.png"} alt="phone" width={34} height={34} className="inline mr-2" />
+              Book a call with Mohidul{" "}
+              <div className="w-[24px] h-[24px] ml-1.5">
+                <MoveUpRight />
+              </div>
+            </button>
+          </Link>
+        </div>
 
-          {/* Share title + icons */}
-          <div className="mt-4 mb-2 text-center">
-            <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
-            <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2">
-              {[
-                { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
-                { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
-                { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
-                { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
-                { platform: 'copy', href: '#', src: "/images/hero/copy.svg", alt: "copy" },
-              ].map((social) => 
-                social.platform === 'copy' ? (
-                  <button
-                    key={social.alt}
-                    onClick={handleCopyLink}
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 cursor-pointer bg-transparent"
-                  >
-                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
-                  </button>
-                ) : (
-                  <a
-                    key={social.alt}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0"
-                  >
-                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
-                  </a>
-                )
-              )}
-            </div>
+        {/* Share title + icons */}
+        <div className="mt-4 mb-2 text-center">
+          <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
+          <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2 shrink-0">
+            {[
+              {
+                platform: "instagram",
+                href: getShareUrl("instagram"),
+                src: "/images/hero/instagram.svg",
+                alt: "instagram",
+              },
+              {
+                platform: "linkedin",
+                href: getShareUrl("linkedin"),
+                src: "/images/hero/linkedin.svg",
+                alt: "linkedin",
+              },
+              { platform: "x", href: getShareUrl("x"), src: "/images/hero/x.svg", alt: "x" },
+              {
+                platform: "whatsapp",
+                href: getShareUrl("whatsapp"),
+                src: "/images/hero/whatsapp.svg",
+                alt: "whatsapp",
+              },
+              { platform: "copy", href: "#", src: "/images/hero/copy.svg", alt: "copy" },
+            ].map((social) =>
+              social.platform === "copy" ? (
+                <button
+                  key={social.alt}
+                  onClick={handleCopyLink}
+                  className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center cursor-pointer bg-transparent box-border"
+                >
+                  <Image
+                    src={social.src}
+                    alt={social.alt}
+                    width={22}
+                    height={22}
+                    className="w-[22px] h-[22px] flex-shrink-0"
+                    unoptimized
+                  />
+                </button>
+              ) : (
+                <a
+                  key={social.alt}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 box-border"
+                >
+                  <Image
+                    src={social.src}
+                    alt={social.alt}
+                    width={22}
+                    height={22}
+                    className="w-[22px] h-[22px] flex-shrink-0"
+                    unoptimized
+                  />
+                </a>
+              ),
+            )}
           </div>
+        </div>
       </div>
 
       {/* ---------------- DESKTOP LAYOUT ---------------- */}
@@ -268,36 +290,42 @@ const SideBar = ({ caseStudyData }) => {
                 {/* 1 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">CLIENT</p>
-                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {caseStudy.client_name}
-                  </h5>
+                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.client_name}</h5>
                 </div>
                 {/* 2 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
-                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {caseStudy.category}
-                  </h5>
+                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.category}</h5>
                 </div>
                 {/* 3 */}
                 <div className="mb-4">
                   <p className="text-sm text-[#66656A] mt-4">TIMELINE</p>
-                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                    {caseStudy.timeline}
-                  </h5>
+                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.timeline}</h5>
                 </div>
                 {/* 4 */}
-                <div className="mb-4">
+                <div className={`${hasService ? "mb-4" : "mb-0"}`}>
                   <p className="text-sm text-[#66656A] mt-4">LIVE VIEW</p>
                   <a
                     href={caseStudy.project_link || "#"}
                     target={caseStudy.project_link ? "_blank" : "_self"}
-                    className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}
+                    className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 ${hasService ? "pb-4 border-b border-[#D3D8DF]" : ""}`}
                   >
                     {caseStudy.project_link ? "Project Link" : "Not Available"}
                     {caseStudy.project_link && (
-                      <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
+                      <svg
+                        className="ml-1.5"
+                        width="13"
+                        height="13"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z"
+                          fill="#1D1C1F"
+                        />
                       </svg>
                     )}
                   </a>
@@ -307,9 +335,7 @@ const SideBar = ({ caseStudyData }) => {
               {/* 5 */}
               {hasService && (
                 <div className="mt-4">
-                  <p className="text-sm text-[#66656A] mt-4">
-                    SERVICES I PROVIDED
-                  </p>
+                  <p className="text-sm text-[#66656A] mt-4">SERVICES I PROVIDED</p>
                   <h5 className="text-base font-medium mt-1">
                     {String(caseStudy.service)
                       .split(/,\s*/g) // split ANY comma + spaces
@@ -327,17 +353,10 @@ const SideBar = ({ caseStudyData }) => {
             <div className="mt-4">
               {/* Button */}
               <div className="flex justify-center">
-                <Link href={'/book-a-call'}>
-
+                <Link href={"/book-a-call"}>
                   <AnimatedButton
                     icon={
-                      <Image
-                        src={"/images/Ideas/01.png"}
-                        alt="phone"
-                        width={34}
-                        height={34}
-                        className="inline mr-2"
-                      />
+                      <Image src={"/images/Ideas/01.png"} alt="phone" width={34} height={34} className="inline mr-2" />
                     }
                     icon2={<MoveUpRight />}
                     textColor="white"
@@ -349,62 +368,61 @@ const SideBar = ({ caseStudyData }) => {
 
               {/* Share title + icons */}
               <div className="mt-4 mb-2 text-center">
-                <h5 className="text-base text-[#1D1C1F]">
-                  Share this Case Study:
-                </h5>
-                <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
+                <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
+                <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3 shrink-0">
                   {[
                     {
-                      platform: 'instagram',
-                      href: getShareUrl('instagram'),
+                      platform: "instagram",
+                      href: getShareUrl("instagram"),
                       src: "/images/hero/instagram.svg",
                       alt: "instagram",
                     },
                     {
-                      platform: 'linkedin',
-                      href: getShareUrl('linkedin'),
+                      platform: "linkedin",
+                      href: getShareUrl("linkedin"),
                       src: "/images/hero/linkedin.svg",
                       alt: "linkedin",
                     },
                     {
-                      platform: 'x',
-                      href: getShareUrl('x'),
+                      platform: "x",
+                      href: getShareUrl("x"),
                       src: "/images/hero/x.svg",
                       alt: "x",
                     },
                     {
-                      platform: 'whatsapp',
-                      href: getShareUrl('whatsapp'),
+                      platform: "whatsapp",
+                      href: getShareUrl("whatsapp"),
                       src: "/images/hero/whatsapp.svg",
                       alt: "whatsapp",
                     },
                     {
-                      platform: 'copy',
-                      href: '#',
+                      platform: "copy",
+                      href: "#",
                       src: "/images/hero/copy.svg",
                       alt: "copy",
                     },
-                  ].map((social) => (
-                    social.platform === 'copy' ? (
+                  ].map((social) =>
+                    social.platform === "copy" ? (
                       <button
                         key={social.alt}
                         onClick={handleCopyLink}
-                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                        className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent box-border"
                       >
                         <Image
                           src={social.src}
                           alt={social.alt}
-                          width={30}
-                          height={30}
-                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          width={22}
+                          height={22}
+                          className="w-[22px] h-[22px] flex-shrink-0 transition-all duration-200 ease-out group-hover:scale-110"
                           style={{
-                            filter: 'none'
+                            filter: "none",
                           }}
                           onMouseEnter={(e) => {
-                            e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                            e.target.style.filter =
+                              "brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)";
                           }}
                           onMouseLeave={(e) => {
-                            e.target.style.filter = 'none';
+                            e.target.style.filter = "none";
                           }}
                           unoptimized
                         />
@@ -415,28 +433,29 @@ const SideBar = ({ caseStudyData }) => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                        className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] box-border"
                       >
                         <Image
                           src={social.src}
                           alt={social.alt}
-                          width={30}
-                          height={30}
-                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          width={22}
+                          height={22}
+                          className="w-[22px] h-[22px] flex-shrink-0 transition-all duration-200 ease-out group-hover:scale-110"
                           style={{
-                            filter: 'none'
+                            filter: "none",
                           }}
                           onMouseEnter={(e) => {
-                            e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                            e.target.style.filter =
+                              "brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)";
                           }}
                           onMouseLeave={(e) => {
-                            e.target.style.filter = 'none';
+                            e.target.style.filter = "none";
                           }}
                           unoptimized
                         />
                       </a>
-                    )
-                  ))}
+                    ),
+                  )}
                 </div>
               </div>
             </div>
@@ -460,36 +479,42 @@ const SideBar = ({ caseStudyData }) => {
               {/* 1 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">CLIENT</p>
-                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {caseStudy.client_name}
-                </h5>
+                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.client_name}</h5>
               </div>
               {/* 2 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">CATEGORY</p>
-                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {caseStudy.category}
-                </h5>
+                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.category}</h5>
               </div>
               {/* 3 */}
               <div className="mb-4">
                 <p className="text-sm text-[#66656A] mt-4">TIMELINE</p>
-                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
-                  {caseStudy.timeline}
-                </h5>
+                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">{caseStudy.timeline}</h5>
               </div>
               {/* 4 */}
-              <div className="mb-4">
+              <div className={`${hasService ? "mb-4" : "mb-0"}`}>
                 <p className="text-sm text-[#66656A] mt-4">LIVE VIEW</p>
                 <a
                   href={caseStudy.project_link || "#"}
                   target={caseStudy.project_link ? "_blank" : "_self"}
-                  className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 pb-4 ${hasService ? "border-b border-[#D3D8DF]" : ""}`}
+                  className={`text-base flex items-center gap-1 ${caseStudy.project_link ? "underline" : ""} font-medium mt-1 ${hasService ? "pb-4 border-b border-[#D3D8DF]" : ""}`}
                 >
                   {caseStudy.project_link ? "Project Link" : "Not Available"}
                   {caseStudy.project_link && (
-                    <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
+                    <svg
+                      className="ml-1.5"
+                      width="13"
+                      height="13"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z"
+                        fill="#1D1C1F"
+                      />
                     </svg>
                   )}
                 </a>
@@ -518,15 +543,7 @@ const SideBar = ({ caseStudyData }) => {
             {/* Button */}
             <div className="flex justify-center">
               <AnimatedButton
-                icon={
-                  <Image
-                    src={"/images/Ideas/01.png"}
-                    alt="phone"
-                    width={34}
-                    height={34}
-                    className="inline mr-2"
-                  />
-                }
+                icon={<Image src={"/images/Ideas/01.png"} alt="phone" width={34} height={34} className="inline mr-2" />}
                 icon2={<MoveUpRight />}
                 textColor="white"
                 label={`Book a call with Mohidul`}
@@ -534,37 +551,51 @@ const SideBar = ({ caseStudyData }) => {
               />
             </div>
 
-            {/* Share title + icons - same size (30px) as non-sticky for consistency */}
+            {/* Share title + icons - box 40×40, icon 22×22 */}
             <div className="mt-4 mb-2 text-center">
-              <h5 className="text-base text-[#1D1C1F]">
-                Share this Case Study:
-              </h5>
-              <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
+              <h5 className="text-base text-[#1D1C1F]">Share this Case Study:</h5>
+              <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3 shrink-0">
                 {[
-                  { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
-                  { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
-                  { platform: 'x', href: getShareUrl('x'), src: "/images/hero/x.svg", alt: "x" },
-                  { platform: 'whatsapp', href: getShareUrl('whatsapp'), src: "/images/hero/whatsapp.svg", alt: "whatsapp" },
-                  { platform: 'copy', href: '#', src: "/images/hero/copy.svg", alt: "copy" },
-                ].map((social) => 
-                  social.platform === 'copy' ? (
+                  {
+                    platform: "instagram",
+                    href: getShareUrl("instagram"),
+                    src: "/images/hero/instagram.svg",
+                    alt: "instagram",
+                  },
+                  {
+                    platform: "linkedin",
+                    href: getShareUrl("linkedin"),
+                    src: "/images/hero/linkedin.svg",
+                    alt: "linkedin",
+                  },
+                  { platform: "x", href: getShareUrl("x"), src: "/images/hero/x.svg", alt: "x" },
+                  {
+                    platform: "whatsapp",
+                    href: getShareUrl("whatsapp"),
+                    src: "/images/hero/whatsapp.svg",
+                    alt: "whatsapp",
+                  },
+                  { platform: "copy", href: "#", src: "/images/hero/copy.svg", alt: "copy" },
+                ].map((social) =>
+                  social.platform === "copy" ? (
                     <button
                       key={social.alt}
                       onClick={handleCopyLink}
-                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                      className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent box-border"
                     >
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={30}
-                        height={30}
-                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
-                        style={{ filter: 'none' }}
+                        width={22}
+                        height={22}
+                        className="w-[22px] h-[22px] flex-shrink-0 transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: "none" }}
                         onMouseEnter={(e) => {
-                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                          e.target.style.filter =
+                            "brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)";
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.filter = 'none';
+                          e.target.style.filter = "none";
                         }}
                         unoptimized
                       />
@@ -575,25 +606,26 @@ const SideBar = ({ caseStudyData }) => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                      className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-[9px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] box-border"
                     >
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={30}
-                        height={30}
-                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
-                        style={{ filter: 'none' }}
+                        width={22}
+                        height={22}
+                        className="w-[22px] h-[22px] flex-shrink-0 transition-all duration-200 ease-out group-hover:scale-110"
+                        style={{ filter: "none" }}
                         onMouseEnter={(e) => {
-                          e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
+                          e.target.style.filter =
+                            "brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)";
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.filter = 'none';
+                          e.target.style.filter = "none";
                         }}
                         unoptimized
                       />
                     </a>
-                  )
+                  ),
                 )}
               </div>
             </div>

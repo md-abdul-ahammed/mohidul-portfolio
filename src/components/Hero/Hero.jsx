@@ -148,10 +148,10 @@ const Hero = () => {
             />
           </div>
 
-          {/* Social Links */}
-          <div className="hidden md:flex md:w-[110px] lg:w-[120px] xl:w-[129px] h-[51px] flex-col">
-            <h6 className="text-sm text-[#1D1C1F] mb-[4px]">Social Link</h6>
-            <div className="flex border border-[#D3D8DF] w-fit">
+          {/* Social Links - Figma: box 33×33px, icon 22×22px */}
+          <div className="hidden md:flex w-fit h-[51px] flex-col">
+            <h6 className="font-machina text-sm text-[#1D1C1F] mb-[4px]">Social Link</h6>
+            <div className="flex border border-[#D3D8DF] w-fit shrink-0">
               {[
                 {
                   href: ensureFullUrl(heroData?.social?.instagram) || "https://www.instagram.com/thisismohidul/",
@@ -184,14 +184,14 @@ const Hero = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group hover:bg-[#F5F6F7]"
+                  className="w-[33px] h-[33px] min-w-[33px] min-h-[33px] p-[5.5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out group hover:bg-[#F5F6F7] box-border"
                 >
                   <Image
                     src={social.src}
                     alt={social.alt}
                     width={22}
                     height={22}
-                    className="w-[22px] h-[22px] transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90"
+                    className="w-[22px] h-[22px] flex-shrink-0 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:opacity-90"
                     unoptimized
                   />
                 </a>

@@ -126,8 +126,6 @@ const BlogSidebar = ({ blogInfo }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper function to check if source link exists
-  const hasSource = blogData.source_link && String(blogData.source_link).trim() !== '' && String(blogData.source_link).trim() !== 'undefined';
   // Show Published only when date is given
   const hasPublished = blogData.published_date && String(blogData.published_date).trim() !== '' && String(blogData.published_date).trim() !== 'undefined';
 
@@ -155,7 +153,7 @@ const BlogSidebar = ({ blogInfo }) => {
         </div>
         
         {/* Row 2: READING TIME and PUBLISHED (Published only when date is given) */}
-        <div className={`grid grid-cols-2 gap-4 mb-4 pb-4 ${hasSource ? "border-b border-[#D3D8DF]" : ""}`}>
+        <div className="grid grid-cols-2 gap-4 mb-4 pb-4 border-b border-[#D3D8DF]">
           {/* 3 */}
           <div>
             <p className="text-sm text-[#66656A] mt-4">READING TIME</p>
@@ -173,30 +171,6 @@ const BlogSidebar = ({ blogInfo }) => {
             </div>
           )}
         </div>
-
-        {/* 5 */}
-        {hasSource && (
-          <div className="mb-4">
-            <p className="text-sm text-[#66656A] mt-4">SOURCE</p>
-            <h5 className="text-base font-medium mt-1">
-              {blogData.source_link ? (
-                <a 
-                  href={ensureFullUrl(blogData.source_link)} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="underline flex items-center gap-1"
-                >
-                  Visit Source
-                  <svg className="w-4 h-4" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
-                  </svg>
-                </a>
-              ) : (
-                "Not Available"
-              )}
-            </h5>
-          </div>
-        )}
 
           {/* Button */}
           <div className="mt-4 flex justify-center">
@@ -219,8 +193,8 @@ const BlogSidebar = ({ blogInfo }) => {
 
           {/* Share title + icons */}
           <div className="mt-4 mb-2 text-center">
-            <h5 className="text-base text-[#1D1C1F]">Share this Blog:</h5>
-            <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2">
+            <h5 className="text-base text-[#1D1C1F]">Share this blog:</h5>
+            <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-2 shrink-0">
               {[
                 { platform: 'instagram', href: getShareUrl('instagram'), src: "/images/hero/instagram.svg", alt: "instagram" },
                 { platform: 'linkedin', href: getShareUrl('linkedin'), src: "/images/hero/linkedin.svg", alt: "linkedin" },
@@ -232,9 +206,9 @@ const BlogSidebar = ({ blogInfo }) => {
                   <button
                     key={social.alt}
                     onClick={handleCopyLink}
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 cursor-pointer bg-transparent"
+                    className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center cursor-pointer bg-transparent box-border"
                   >
-                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
+                    <Image src={social.src} alt={social.alt} width={24} height={24} className="w-[24px] h-[24px] flex-shrink-0" unoptimized />
                   </button>
                 ) : (
                   <a
@@ -242,9 +216,9 @@ const BlogSidebar = ({ blogInfo }) => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0"
+                    className="w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 box-border"
                   >
-                    <Image src={social.src} alt={social.alt} width={22} height={22} className="w-[22px] h-[22px]" unoptimized />
+                    <Image src={social.src} alt={social.alt} width={24} height={24} className="w-[24px] h-[24px] flex-shrink-0" unoptimized />
                   </a>
                 )
               )}
@@ -287,40 +261,14 @@ const BlogSidebar = ({ blogInfo }) => {
                 </div>
                 {/* 4 - only when date is given */}
                 {hasPublished && (
-                <div className="mb-4">
+                <div className="">
                   <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
-                  <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
+                  <h5 className="text-base font-medium mt-1">
                     {blogData.published_date}
                   </h5>
                 </div>
                 )}
               </div>
-
-              {/* 5 */}
-              {hasSource && (
-                <div className="mt-4">
-                  <p className="text-sm text-[#66656A] mt-4">
-                    SOURCE
-                  </p>
-                  <h5 className="text-base font-medium mt-1">
-                    {blogData.source_link ? (
-                      <a 
-                        href={ensureFullUrl(blogData.source_link)} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="underline flex items-center gap-1"
-                      >
-                        Visit Source
-                        <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
-                        </svg>
-                      </a>
-                    ) : (
-                      "Not Available"
-                    )}
-                  </h5>
-                </div>
-              )}
             </div>
 
             {/* Button + Social icons */}
@@ -350,7 +298,7 @@ const BlogSidebar = ({ blogInfo }) => {
               {/* Share title + icons */}
               <div className="mt-4 mb-2 text-center">
                 <h5 className="text-base text-[#1D1C1F]">
-                  Share this Blog:
+                  Share this blog:
                 </h5>
                 <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                   {[
@@ -389,14 +337,14 @@ const BlogSidebar = ({ blogInfo }) => {
                       <button
                         key={social.alt}
                         onClick={handleCopyLink}
-                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                        className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
                       >
                         <Image
                           src={social.src}
                           alt={social.alt}
-                          width={30}
-                          height={30}
-                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          width={24}
+                          height={24}
+                          className="w-[24px] h-[24px] transition-all duration-200 ease-out group-hover:scale-110"
                           style={{
                             filter: 'none'
                           }}
@@ -415,14 +363,14 @@ const BlogSidebar = ({ blogInfo }) => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                        className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
                       >
                         <Image
                           src={social.src}
                           alt={social.alt}
-                          width={30}
-                          height={30}
-                          className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                          width={24}
+                          height={24}
+                          className="w-[24px] h-[24px] transition-all duration-200 ease-out group-hover:scale-110"
                           style={{
                             filter: 'none'
                           }}
@@ -480,38 +428,14 @@ const BlogSidebar = ({ blogInfo }) => {
               </div>
               {/* 4 - only when date is given */}
               {hasPublished && (
-              <div className="mb-4">
+              <div className="">
                 <p className="text-sm text-[#66656A] mt-4">PUBLISHED</p>
-                <h5 className="text-base font-medium mt-1 pb-4 border-b border-[#D3D8DF]">
+                <h5 className="text-base font-medium mt-1 ">
                   {blogData.published_date}
                 </h5>
               </div>
               )}
             </div>
-
-            {/* 5 */}
-            {hasSource && (
-              <div className="mt-4">
-                <p className="text-sm text-[#66656A] mt-4">SOURCE</p>
-                <h5 className="text-base font-medium mt-1">
-                  {blogData.source_link ? (
-                    <a 
-                      href={ensureFullUrl(blogData.source_link)} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="underline flex items-center gap-1"
-                    >
-                      Visit Source
-                      <svg className="ml-1.5" width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M3.75 1.5C3.33579 1.5 3 1.16421 3 0.75C3 0.335786 3.33579 0 3.75 0H12.75C13.1642 0 13.5 0.335786 13.5 0.75V9.75C13.5 10.1642 13.1642 10.5 12.75 10.5C12.3358 10.5 12 10.1642 12 9.75V2.56066L1.28033 13.2803C0.987437 13.5732 0.512563 13.5732 0.21967 13.2803C-0.0732233 12.9874 -0.0732233 12.5126 0.21967 12.2197L10.9393 1.5H3.75Z" fill="#1D1C1F"/>
-                      </svg>
-                    </a>
-                  ) : (
-                    "Not Available"
-                  )}
-                </h5>
-              </div>
-            )}
           </div>
 
           {/* Button + Social icons */}
@@ -538,7 +462,7 @@ const BlogSidebar = ({ blogInfo }) => {
             {/* Share title + icons */}
             <div className="mt-4 mb-2 text-center">
               <h5 className="text-base text-[#1D1C1F]">
-                Share this Blog:
+                Share this blog:
               </h5>
               <div className="flex border border-[#D3D8DF] w-fit mx-auto mt-3">
                 {[
@@ -552,14 +476,14 @@ const BlogSidebar = ({ blogInfo }) => {
                     <button
                       key={social.alt}
                       onClick={handleCopyLink}
-                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
+                      className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7] cursor-pointer bg-transparent"
                     >
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={30}
-                        height={30}
-                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        width={24}
+                        height={24}
+                        className="w-[24px] h-[24px] transition-all duration-200 ease-out group-hover:scale-110"
                         style={{ filter: 'none' }}
                         onMouseEnter={(e) => {
                           e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';
@@ -576,14 +500,14 @@ const BlogSidebar = ({ blogInfo }) => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group p-[5px] border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
+                      className="group w-[40px] h-[40px] min-w-[40px] min-h-[40px] p-2 border-r border-[#D3D8DF] flex items-center justify-center last:border-r-0 transition-all duration-200 ease-out hover:bg-[#F5F6F7]"
                     >
                       <Image
                         src={social.src}
                         alt={social.alt}
-                        width={30}
-                        height={30}
-                        className="w-[30px] h-[30px] transition-all duration-200 ease-out group-hover:scale-110"
+                        width={24}
+                        height={24}
+                        className="w-[24px] h-[24px] transition-all duration-200 ease-out group-hover:scale-110"
                         style={{ filter: 'none' }}
                         onMouseEnter={(e) => {
                           e.target.style.filter = 'brightness(0) saturate(100%) invert(64%) sepia(54%) saturate(2040%) hue-rotate(108deg) brightness(95%) contrast(85%)';

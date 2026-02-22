@@ -2,7 +2,6 @@ import BlogHero from "@/components/BlogHero/BlogHero";
 import AbouttheBlog from "@/components/AbouttheBlog/AbouttheBlog";
 import BlogSidebar from "@/components/BlogSidebar/BlogSidebar";
 import RelatedBlogs from "@/components/RelatedBlogs/RelatedBlogs";
-import LetsTalk from "@/components/LetsTalk/LetsTalk";
 import React from "react";
 
 // Use production API for static generation
@@ -135,7 +134,6 @@ const BlogPage = async ({ params }) => {
       </div>
 
       <RelatedBlogs tags={blogData?.tags} currentBlogId={blogData?.id} />
-      <LetsTalk></LetsTalk>
     </div>
   );
 };

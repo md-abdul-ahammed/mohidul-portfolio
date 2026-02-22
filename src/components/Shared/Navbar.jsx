@@ -131,7 +131,7 @@ export default function Navbar() {
                 alt="logo"
                 width={198}
                 height={64}
-                className="md:w-[150px] lg:w-[180px] xl:w-[198px] h-16 py-3 md:px-4 lg:px-5 xl:px-6 border-t border-l border-[#D3D8DF] cursor-pointer"
+                className="md:w-[150px] lg:w-[180px] xl:w-[198px] h-16 md:px-4 lg:px-4 xl:px-4 border-t border-l border-[#D3D8DF] cursor-pointer"
               />
             </Link>
 
