@@ -74,10 +74,10 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
     const patterns = [
       "max-w-full md:max-w-[410px] lg:max-w-[480px] xl:max-w-[700px]", // Pattern 0: left aligned
       "max-w-full md:flex md:justify-end", // Pattern 1: right aligned
-      "col-span-1 md:col-span-2 flex md:justify-center", // Pattern 2: center aligned, spans 2 columns
+      "col-span-1 md:col-span-2 md:flex md:justify-center", // Pattern 2: center aligned, spans 2 columns
       "max-w-full md:max-w-[410px] lg:max-w-[480px] xl:max-w-[700px]", // Pattern 3: left aligned
       "max-w-full md:flex md:justify-end", // Pattern 4: right aligned
-      "col-span-1 md:col-span-2 flex md:justify-center", // Pattern 5: center aligned, spans 2 columns
+      "col-span-1 md:col-span-2 md:flex md:justify-center", // Pattern 5: center aligned, spans 2 columns
     ];
     return patterns[position];
   };
@@ -232,7 +232,7 @@ const Portfolio = ({ title, subTitle, apiEndpoint = "portfolio" }) => {
 
               return (
                 <div key={item.id} ref={ref} className={layoutClass}>
-                  <Link href={apiEndpoint === "blogs" ? `/blog/${item.id}?${item.title.replaceAll(" ", "_")}` : `/project/${item.id}?${item.title.replaceAll(" ", "_")}`}>
+                  <Link href={apiEndpoint === "blogs" ? `/blog/${item.id}?${item.title.replaceAll(" ", "_")}` : `/project/${item.id}?${item.title.replaceAll(" ", "_")}`} className="block w-full md:w-auto">
                     <div className={`block md:inline-block ${imageDimensions.width === 700 ? 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]' : imageDimensions.width === 448 ? 'w-full md:w-[310px] lg:w-[360px] xl:w-[448px]' : 'w-full md:w-[380px] lg:w-[480px] xl:w-[700px]'}`}>
                       <AnimatedImage
                         src={item.image}
