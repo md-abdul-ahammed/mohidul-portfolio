@@ -12,6 +12,8 @@ import { API_ENDPOINTS } from "@/config/api";
 
 const AboutMe = () => {
   const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const [aboutData, setAboutData] = useState({
     about_text: "",
@@ -183,18 +185,42 @@ const AboutMe = () => {
               {/* image or video */}
               <motion.div className="mb-4 md:mb-6 w-full" variants={fadeInUp}>
                 {aboutData.about_video ? (
-                  <video
-                    src={aboutData.about_video}
-                    className="w-full h-[300px] md:h-[380px] lg:h-[420px] xl:h-[447px] object-cover"
-                    style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      display: "block",
-                    }}
-                    controls
-                    muted
-                    loop
-                  />
+                  <div className="relative w-full h-[300px] md:h-[380px] lg:h-[420px] xl:h-[447px] group">
+                    <video
+                      ref={videoRef}
+                      src={aboutData.about_video}
+                      className="w-full h-full object-cover block"
+                      style={{ objectFit: "cover" }}
+                      controls={isVideoPlaying}
+                      muted
+                      loop
+                      playsInline
+                      onPlay={() => setIsVideoPlaying(true)}
+                      onPause={() => setIsVideoPlaying(false)}
+                      onEnded={() => setIsVideoPlaying(false)}
+                    />
+                    {/* Same custom play button as mobile – circular white with black triangle, all screens */}
+                    {!isVideoPlaying && (
+                      <button
+                        type="button"
+                        onClick={() => videoRef.current?.play()}
+                        className="absolute inset-0 flex items-center justify-center w-full h-full bg-black/20 transition-opacity hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#27B43E] focus:ring-offset-2"
+                        aria-label="Play video"
+                      >
+                        <span className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                          {/* Play triangle – black, same as mobile */}
+                          <svg
+                            className="w-6 h-6 md:w-8 md:h-8 text-[#1D1C1F] ml-1"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden
+                          >
+                            <path d="M8 5v14l11-7L8 5z" />
+                          </svg>
+                        </span>
+                      </button>
+                    )}
+                  </div>
                 ) : (
                   <AnimatedImage
                     src={"/images/aboutMe/myimg.svg"}

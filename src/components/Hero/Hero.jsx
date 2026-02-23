@@ -132,14 +132,6 @@ const Hero = () => {
         {/* Bottom content - hero-bottom-safe: extra padding on real mobile so text isn't cut by browser nav bar */}
         <div className="hero-bottom-safe absolute bottom-0 left-0 w-full flex flex-col md:flex-row justify-between items-end px-4 md:px-4 lg:px-5 xl:px-6 pb-6 md:pb-8 lg:pb-5 xl:pb-6">
           <div className="w-full md:w-auto text-left">
-            <h4
-              className="text-white md:text-[#1D1C1F] 
-                text-[20px] md:text-[1.75rem] lg:text-[2.5rem] xl:text-6xl
-                px-4 md:px-0 font-machina font-normal"
-            >
-              ©{new Date().getFullYear()}
-            </h4>
-
             <Lottie
               animationData={animationData}
               loop={false}
